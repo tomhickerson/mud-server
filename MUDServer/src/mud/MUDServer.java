@@ -876,6 +876,8 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 			run(); // run main loop
 		}
 		catch (final Exception e) {
+			e.printStackTrace();
+			
 			debug("Exception in MUDServer.init()");
 			
 			debug( e );
@@ -19365,7 +19367,13 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 	
 	private void log(final String logString, final String logName) {
 		if ( this.logging ) {
-			this.logger.log(logName, logString);
+			// System.out.println("about to log on " + logName + " and " +logString); 
+			try {
+				this.logger.log(logName, logString);
+			} catch (NullPointerException npeee) {
+				// TODO Auto-generated catch block
+				npeee.printStackTrace();
+			}
 		}
 	}
 	
