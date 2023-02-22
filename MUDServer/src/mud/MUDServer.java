@@ -702,10 +702,15 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 						String moduleName = args[a + 1];
 						
 						// TODO fix these explicit checks
-						if (moduleName.equals("basic") ) server.module = new mud.modules.BasicModule("Basic", null);
-						if (moduleName.equals("foe"))    server.module = new mud.modules.FalloutEquestria();
-						if (moduleName.equals("dnd-fr")) server.module = new mud.modules.DND35();
-						else                             //load and initialize a GameModule subclass?
+						if (moduleName.equals("basic") ) {
+							server.module = new mud.modules.BasicModule("Basic", null);
+						} else if (moduleName.equals("foe")) {
+							server.module = new mud.modules.FalloutEquestria();
+						} else {
+							// load and initialize a GameModule subclass?
+							// for now just default to dnd
+							server.module = new mud.modules.DND35();
+						}
 						
 						System.out.println("Using module " + server.module.getName());
 						
@@ -1575,8 +1580,12 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 				}
 				
 				// execute any relevant main code from the module
-				module.run();
-
+				try {
+					module.run();
+				} catch (NullPointerException npx) {
+					System.out.println("Please make sure to specify the --module flag!");
+					System.exit(-1);
+				}
 				/* Notification Messages */
 
 				// if we aren't delivering immediate notifications, then they'll be handled here
