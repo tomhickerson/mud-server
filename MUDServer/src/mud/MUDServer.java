@@ -706,6 +706,8 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 							server.module = new mud.modules.BasicModule("Basic", null);
 						} else if (moduleName.equals("foe")) {
 							server.module = new mud.modules.FalloutEquestria();
+						} else if (moduleName.equals("ggg")) {
+							server.module = new mud.modules.Spellbound("Golems, Gears, Gargoyles");
 						} else {
 							// load and initialize a GameModule subclass?
 							// for now just default to dnd
@@ -818,7 +820,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 					else if (param.equals("theme")) {
 						server.THEME_FILE = server.resolvePath(server.THEME_DIR, args[a + 1]);
 						System.out.println("Using theme " + args[a + 1]);
-						// System.out.println("");
 					}
 					else if (param.equals("use-accounts")) {
 						server.use_accounts = true;
@@ -1048,13 +1049,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		this.loadTheme(THEME_FILE);
 		
 		// TODO resolve this somehow, perhaps those aren't appropriate pieces of a theme
-		// NOTE: going to set these in loadTheme for now (8-8-2015)
-		/*day = 0;
-		month = 0;
-		year = 0;*/
-
-		//this.month_name = MONTH_NAMES[month - 1];
-		//this.year_name = years.get(year);
 
 		debug(""); // formatting
 
@@ -1217,7 +1211,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		System.out.println("");
 		
 		System.out.println("Help Files");
-		//System.out.println("----------------------------------------");
+
 		System.out.println(Utils.padLeft("", '-', 65));
 		
 		for (final String helpFileName : generateHelpFileIndex()) {
@@ -1266,7 +1260,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		System.out.println("");
 		
 		System.out.println("Topic Files");
-		//System.out.println("----------------------------------------");
+
 		System.out.println(Utils.padLeft("", '-', 65));
 		
 		for (final String topicFileName : generateTopicFileIndex()) {
