@@ -953,33 +953,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 			}
 		}
 		
-		/*ArrayList<File> files = new ArrayList<File>();
-
-		files.add(new File(ALIASES_FILE));
-		files.add(new File(BANLIST_FILE));
-		files.add(new File(CHANNELS_FILE)); 
-		files.add(new File(CONFIG_FILE));
-		files.add(new File(FORBIDDEN_FILE));
-
-		// check that the files exist, if not create them for (final File
-		for(File file : files) {
-			boolean success = false;
-
-			try {
-				success = file.createNewFile();
-			}
-			catch (IOException e1) {
-				//TODO Auto-generated catch block e1.printStackTrace(); }
-			}
-			
-			if (success) {
-				System.out.println("File \'" + file.getAbsolutePath() + "\' created");
-			}
-			else {
-				System.out.println("File \'" + file.getAbsolutePath() + "\' exists."); 
-			}
-		}*/
-		
 		System.out.println("");
 		
 		debug(""); // formatting
@@ -1187,19 +1160,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		// instantiate forbidden names list
 		forbiddenNames = GameUtils.loadListDatabase(FORBIDDEN_FILE);
 
-		// load configuration data (file -- default.config)
-		// loadConfiguration(CONFIG_DIR + "config.txt", configs); ?
-		/*
-		 * for (final String s : loadListDatabase(CONFIG_DIR + "config.txt")) {
-		 * final String[] configInfo = s.split(":"); String name =
-		 * Utils.trim(configInfo[0]); String value = Utils.trim(configInfo[1]);
-		 * value = value.substring(0, value.indexOf('#')); config.put(name,
-		 * value); }
-		 */
-
-		// print out config map
-		// debug(config.entrySet());
-
 		debug("");
 		
 		// for help/topic file loading
@@ -1237,12 +1197,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 			// TODO consider a config option for this
 			// check to see if the mapping made it into the table
-			/*if( helpTable.containsKey(key) && helpTable.get(key) != null ) {
-				debug(Utils.padRight(helpFileName, ' ', 20) + " -- HelpFile Loaded!");
-			}
-			else {
-				
-			}*/
+
 		}
 
 		// cleanup
@@ -1281,10 +1236,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 			// TODO consider a config option for this
 			// check to see if the mapping made it into the table
-			/*
-			 * if( topicTable.containsKey( topicfile[0] ) ) {
-			 * debug("Topic Loaded!"); } else debug("Error!");
-			 */
+
 		}
 		
 		// cleanup
@@ -1445,11 +1397,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 		/* Testing */
 		if( testing ) {
-			// TODO is this necessary
-			/*do {
-				System.out.println("Waiting...");
-			}
-			while( !loader.isLoaded() );*/
 
 			synchronized(objectDB) {
 				// world specific testing and pre-load
@@ -1511,15 +1458,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		this.s = new Server(this, port);
 		
 		startThread( this.s, "server" );
-		
-		// wait for the server to start, 1 second at a time
-		/*do {
-			synchronized(this) {
-				try                            { wait(1000); }
-				catch (InterruptedException e) { e.printStackTrace(); }
-			}
-		}
-		while( !s.isRunning() );*/
 		
 		debug("Server (Thread) Started!");
 		
@@ -4934,136 +4872,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 	 * @param arg
 	 * @param client
 	 */
-	/*private void cmd_cast(final String arg, final Client client) {
-		final Player player = getPlayer(client);
-
-		if ( !player.isCaster() ) {
-			send("What do you think you are anyway? Some kind of wizard? That's just mumbo-jumbo to you!", client);
-			return;
-		}
-		
-		final String spellName = arg;
-
-		final Spell spell = getSpell(spellName);
-
-		if (spell == null) {
-			send("You move your fingers and mumble, but nothing happens. Must have been the wrong words.", client);
-			debug("CastCommand spellName: " + spellName);
-			return;
-		}
-		
-		// level, spell check -- can the player cast this level spell...
-		// should this be reversed???
-		// ^No, but the player's level and effective caster level is not
-		// equivalent to the spell's level
-		// PL -> SL: 0 -> 0, 1,2 -> 1, 3,4 -> 2, 5,6 -> 3, 7 -> 4...
-		//if (player.getLevel() < spell.getLevel()) {
-		if( true ) {
-			// add reagents check!
-			if( !hasReagents(player, spell) ) {
-				send("Insufficient spell components", client);
-				return;
-			}
-			
-			if( player.getMana() < spell.getManaCost() ) {
-				send("Insufficient Mana!", client);
-				return;
-			}
-
-			// reduce mana by spell's mana cost
-			player.setMana( -spell.getManaCost() );
-			
-			// TODO unreliable armor getting call
-			// calculate spell failure (basic, just checks armor for now)
-			Armor armor = (Armor) player.getSlots().get("armor").getItem();
-			
-			// TODO spell failure should be balance by something
-			double spellFailure = 0;
-
-			if (armor != null) {
-				spellFailure = armor.getSpellFailure() * 100; // spellFailure stored as percentage
-				debug("Spell Failure: " + spellFailure);
-			}
-
-			// Create random number 1 - 100
-			int randNumber = (int) ((Math.random() * 100) + 1);
-
-			debug("d100 Roll: " + randNumber);
-			
-			// success percentage > 50
-			if (randNumber - spellFailure > 50 ) {
-				final RangeData rd = spell.getRangeData();
-				
-				if( rd.isType( RangeType.PERSONAL ) || rd.isType(RangeType.TOUCH) ) {
-				}
-				
-				// TODO need an unambiguous way to identify a target..
-				// target check
-				if (player.getTarget() == null) {
-					// TODO what about multi-target?
-					// if no target then auto-target self, etc, dependent on spell
-					// auto-target to self
-					player.setTarget(player);
-				}
-
-				final MUDObject target = player.getTarget();
-				
-				// cast spell 
-				String message = spell.getCastMessage();
-				
-				message = message.replace("&target", player.getTarget().getName());
-				
-				send(message, client);
-				
-				// TODO no such method yet
-				//applyEffects(target, spell.getEffects());
-				
-				// apply effects to the target
-				for (final Effect e : spell.getEffects()) {
-					if ( target.isType(TypeFlag.PLAYER) ) {
-						System.out.println("Target is Player.");
-						final Player ptarget = (Player) target;
-
-						applyEffect(ptarget, e); // apply the effect to the target
-
-						// spell timer with default (60 sec) cooldown
-						final SpellTimer sTimer = new SpellTimer(spell, 60);
-						
-						getSpellTimers(player).add(sTimer);
-						
-						timer.scheduleAtFixedRate(sTimer, 0, 1000);
-						
-						// effect timer with default (30 sec) cooldown
-						final EffectTimer etimer = new EffectTimer(e, 30);
-						
-						getEffectTimers(player).add(etimer);
-						
-						timer.scheduleAtFixedRate(etimer, 0, 1000); // create countdown timer
-					}
-					else {
-						System.out.println("Target is not Player.");
-						applyEffect(target, e);
-					}
-				}
-
-				// if our target is a player tell them otherwise don't bother
-				if ( target.isType(TypeFlag.PLAYER) ) {
-					debug("Target is Player.");
-					
-					//Message msg = new Message(player, (Player) target, player.getName() + " cast " + spell.getName() + " on you.");
-					Message msg = new Message(null, (Player) target, player.getName() + " cast " + spell.getName() + " on you.");
-					
-					addMessage(msg);
-				}
-				
-				player.setLastSpell(spell);
-			}
-			else {
-				send("A bit of magical energy sparks off you briefly, then fizzles out. Drat!", client);
-			}
-		}
-	}*/
-	
 
 	private void cmd_cast(final String arg, final Client client) {
 		final Player player = getPlayer(client);
