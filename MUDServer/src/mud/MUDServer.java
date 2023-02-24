@@ -5300,32 +5300,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 				send("Line Limit is " + getPlayer(client).getLineLimit() + ".", client);
 			}
 		}
-
-		/*
-		 * if ( args.length > 1 ) { if ( arg.equalsIgnoreCase("prompt_enabled")
-		 * ) { switch( args[1] ) { case "true": prompt_enabled = true;
-		 * send("SRV> set " + args[0] + " to TRUE.", client); break; case
-		 * "false": prompt_enabled = false; send("SRV> set " + args[0] +
-		 * " to FALSE.", client); break; default:
-		 * send("SRV> Invalid config setting!", client); break; } } }
-		 */
-
-		/*
-		 * f ( arg.contains("=") ) { String[] args = arg.split("=");
-		 * 
-		 * if ( config.containsKey( Utils.trim( args[0] ) ) ) {
-		 * debug("Config> Setting '" + Utils.trim( args[0] ) + "' to '" +
-		 * Utils.trim( args[1] )); config.put( Utils.trim( args[0] ),
-		 * Utils.trim( args[1] ) ); send("Game [config]> " + Utils.trim( args[0]
-		 * ) + ": " + Utils.trim( args[1] ), client); } else {
-		 * debug("Game [config]> no such configurable setting exists.");
-		 * send("Game [config]> no such configurable setting exists.", client);
-		 * } } else { if ( arg.equals("list") ) { send("Configuration Options",
-		 * client); for (Entry<String, String> e : config.entrySet()) { send(
-		 * Utils.padRight( e.getKey(), ' ', 10 ) + " : " + e.getValue(),
-		 * client); } } else { send( gameError("@config",
-		 * ErrorCodes.INVALID_SYNTAX), client ); } }
-		 */
 	}
 
 	/**
@@ -5962,41 +5936,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		final Player player = getPlayer(client);
 		final int access = player.getAccess();
 		
-		/*final List<Set<String>> commandMaps = new LinkedList<Set<String>>();
-		
-		commandMaps.add( commandMap.keySet() );
-		commandMaps.add( player.getCommands().keySet() );
-
-		int c = 0;
-
-		StringBuilder sb = new StringBuilder();
-
-		for (final Set<String> s : commandMaps) {
-			for (String key : s) {
-				System.out.println(key);
-				debug(key);
-				if (sb.toString().equals("")) sb.append(key);
-				else                          sb.append(", " + key);
-			}
-
-			switch (c) {
-			case 0:
-				//System.out.println("mapped cmd");
-				showDesc(colors("mapped: ", "yellow") + sb.toString(), client);
-				break;
-			case 1:
-				//System.out.println("mapped player cmd");
-				showDesc(colors("mapped(player): ", "yellow") + sb.toString(), client);
-				break;
-			default:
-				break;
-			}
-
-			sb.delete(0, sb.length());
-
-			c++;
-		}*/
-		
 		send(colors("user commands: ", "green") + Utils.join(user_cmds, ", "), client);
 
 		if (access >= Constants.BUILD) {
@@ -6595,17 +6534,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 	private void cmd_deposit(final String arg, final Client client) {
 		final Player player = getPlayer(client);
 		final Room room = getRoom( player.getLocation() );
-
-		/*String str = null;
-
-		try {
-			str = room.getProperty("_game/isBank");
-		}
-		catch(final ClassCastException cce) {
-			System.out.println("--- Stack Trace ---");
-			cce.printStackTrace();
-			str = "false";
-		}*/
 
 		String str = room.getProperty("_game/isBank");
 
@@ -7404,13 +7332,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 						send("Invalid Flag: " + c, client);
 					}
 				}
-				
-				/*if (m != null) {
-					m.setFlags( ObjectFlag.getFlagsFromString(args[1] + player.getFlagsAsString()) );
-
-					send(m.getName() + " flagged " + ObjectFlag.fromLetter(args[1].charAt(0)), client);
-				}
-				else send("No such object.", client);*/
 			}
 		}
 	}
