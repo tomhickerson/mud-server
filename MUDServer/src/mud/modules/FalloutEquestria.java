@@ -598,30 +598,12 @@ public final class FalloutEquestria extends GameModule implements ExtraCommands 
 		
 		term.write( input );
 
-		/*if (term.getLoginState() == mud.foe.Terminal.Login.LOGGED_OUT) {
-			term.handle_login(input, client);
-		}
-		else if (term.getLoginState() == mud.foe.Terminal.Login.LOGGED_IN) {
-			int code = term.processInput(input);
-
-			if (code == 0) {
-				player.setStatus("IC");
-				notify(player, "You quit using the terminal.");
-			}
-		}*/
 	}
 	
 	public boolean use(final Player player, final MUDObject mobj) {
 		if( mobj.isType(TypeFlag.THING) ) {
 			final Thing thing = (Thing) mobj;
-			
-			/*switch( thing.thing_type ) {
-			case FOEThingTypes.TERMINAL:
-				break;
-			default:
-				break;
-			}*/
-			
+
 			if( thing.thing_type == FOEThingTypes.TERMINAL ) {
 				final Terminal term = (Terminal) thing;
 				

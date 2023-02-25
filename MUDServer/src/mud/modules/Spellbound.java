@@ -15,6 +15,7 @@ import mud.misc.Slot;
 import mud.misc.SlotType;
 import mud.misc.SlotTypes;
 import mud.objects.*;
+import mud.rulesets.spb.SpellboundGGG;
 
 public class Spellbound extends GameModule {
     private String name = "Spellbound";
@@ -45,7 +46,7 @@ public class Spellbound extends GameModule {
     // TODO create a spellbound instance of the ruleset
     @Override
     public Ruleset getRuleset() {
-        return null;
+        return SpellboundGGG.getInstance();
     }
 
     @Override
