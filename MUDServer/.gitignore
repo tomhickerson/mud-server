@@ -2,5 +2,7 @@
 /doc
 /config notes.txt
 /build
+/target
+/notes.txt
 /dist
 /.gitignore
