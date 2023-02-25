@@ -11,12 +11,10 @@ import mud.game.Faction;
 import mud.game.PClass;
 import mud.game.Skill;
 import mud.interfaces.Ruleset;
+import mud.misc.Slot;
 import mud.misc.SlotType;
-import mud.objects.Item;
-import mud.objects.ItemType;
-import mud.objects.Player;
-import mud.objects.Thing;
-import mud.objects.ThingType;
+import mud.misc.SlotTypes;
+import mud.objects.*;
 
 public class Spellbound extends GameModule {
     private String name = "Spellbound";
@@ -72,6 +70,24 @@ public class Spellbound extends GameModule {
     @Override
     public void PCInit(Player player) {
         // TODO Auto-generated method stub
+        // add/initialize slots
+        player.addSlot("helmet",   new Slot(SlotTypes.HEAD,   ItemTypes.ARMOR));
+        player.addSlot("necklace", new Slot(SlotTypes.NECK,   ItemTypes.NECKLACE));
+        player.addSlot("armor",    new Slot(SlotTypes.CHEST,  ItemTypes.ARMOR));
+        player.addSlot("cloak",    new Slot(SlotTypes.BACK,   ItemTypes.CLOTHING));
+        player.addSlot("ring1",    new Slot(SlotTypes.FINGER, ItemTypes.RING));
+        player.addSlot("ring2",    new Slot(SlotTypes.FINGER, ItemTypes.RING));
+        player.addSlot("ring3",    new Slot(SlotTypes.FINGER, ItemTypes.RING));
+        player.addSlot("ring4",    new Slot(SlotTypes.FINGER, ItemTypes.RING));
+        player.addSlot("ring5",    new Slot(SlotTypes.FINGER, ItemTypes.RING));
+        player.addSlot("ring6",    new Slot(SlotTypes.FINGER, ItemTypes.RING));
+        player.addSlot("gloves",   new Slot(SlotTypes.HANDS,  ItemTypes.CLOTHING));
+        player.addSlot("weapon",   new Slot(SlotTypes.RHAND,  ItemTypes.WEAPON, ItemTypes.WAND));
+        player.addSlot("weapon1",  new Slot(SlotTypes.LHAND,  ItemTypes.WEAPON, ItemTypes.WAND));
+        player.addSlot("weapon2",  new Slot(SlotTypes.HANDS,  ItemTypes.WEAPON));
+        player.addSlot("belt",     new Slot(SlotTypes.WAIST,  ItemTypes.CLOTHING));
+        player.addSlot("boots",    new Slot(SlotTypes.FEET,   ItemTypes.CLOTHING));
+        player.addSlot("other",    new Slot(SlotTypes.NONE,   ItemTypes.NONE ));
 
     }
 

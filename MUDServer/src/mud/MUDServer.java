@@ -7386,17 +7386,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 				String param = args[0].substring(1);
 				String searchString = args[1];
 
-				/*
-				 * if( param.equals("p") ) { System.out.println("Find Players");
-				 * send("Find Players - using \'" + searchString + "\'");
-				 * 
-				 * // needs to work even with offline players if( searchString
-				 * == null ) { matches.addAll(objectDB.players.keySet()); } else
-				 * { for(final MUDObject m : objectDB.players.values()) { if(
-				 * m.getName().contains(searchString) ) {
-				 * matches.add(m.getName() + " (#" + m.getDBRef() + ")"); } } }
-				 * }
-				 */
 				if ( param.equals("i") ) {
 
 				}
@@ -7731,65 +7720,9 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 				}
 				
 				if( !success ) send("No such item", client);
-				
-				/*System.out.println("ITEMS");
 
-				final List<Item> items = new LinkedList<Item>();
-
-				items.addAll( findItems(player.getInventory(), args[0]) );
-				items.addAll( findItems(room.getItems(),       args[0]) );
-
-				for (final Item item : items) {
-					if (item.getItemType() == ItemTypes.CONTAINER) {
-						s = (Container) item;
-
-						success = get(player, s, itemName);
-
-						break;
-					}
-				}
-
-				if( !success ) {
-					System.out.println("THINGS");
-
-					final List<Thing> things = new LinkedList<Thing>();
-
-					things.addAll( room.getThings() );
-
-					for (final Thing thing : things) {	
-						if( thing.thing_type == ThingTypes.CONTAINER ) {
-							s = (Box) thing;
-
-							success = get(player, s, itemName);
-							break;
-						}
-					}
-				}
-
-				if( !success ) send("No such item", client);*/
 			}
 
-			/*
-			 * 
-			 * // get a list of the objects that the player can see
-			 * List<MUDObject> foundObjects = findVisibleObjects(room);
-			 * 
-			 * // look in the room for(final MUDObject m : foundObjects) { if( m
-			 * instanceof Thing && m instanceof Storage ) { if(
-			 * m.getName().equalsIgnoreCase(args[0]) ) { Storage s = (Storage)
-			 * m;
-			 * 
-			 * Item item = s.retrieve(itemName);
-			 * 
-			 * if( item != null ) { player.getInventory().add( item );
-			 * item.setLocation(player.getDBRef());
-			 * System.out.println(player.getInventory());
-			 * 
-			 * send("You get " + colors(item.getName(), getDisplayColor("item"))
-			 * + " from " + ((MUDObject) s).getName(), client);
-			 * 
-			 * return; } } } }
-			 */
 		}
 	}
 
@@ -7853,17 +7786,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 					output.add( colors(file[1], "green") + "\r\n" );
 
 					output.addAll( Arrays.asList(temp).subList(2, temp.length) );
-
-					/*for (final String line : Arrays.copyOfRange(file, 2, file.length)) {
-					// client.write(check(line) + "\r\n");
-					// client.write(line + "\r\n");
-
-					output.add( line );
-
-					// TODO figure out why showDesc ignores the line width if
-					// used here, perhaps check(...) is causing the problem?
-					// showDesc(check(line), lineWidth, client);
-				}*/
 
 					// tell us when the file was last modified/updated?
 
