@@ -43,12 +43,12 @@ public class Spellbound extends GameModule {
         return 0;
     }
 
-    // TODO create a spellbound instance of the ruleset
     @Override
     public Ruleset getRuleset() {
         return SpellboundGGG.getInstance();
     }
 
+    // classless mud
     @Override
     public boolean hasClasses() {
         return false;

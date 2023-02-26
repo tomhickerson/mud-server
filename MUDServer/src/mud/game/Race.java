@@ -1,7 +1,7 @@
 package mud.game;
 
 import mud.interfaces.Ruleset;
-import mud.rulesets.d20.Races;
+import mud.rulesets.spb.Races;
 
 
 /*
@@ -130,5 +130,9 @@ public class Race {
 		public final Subrace SUN_ELF = new Subrace(Races.ELF, "Sun Elf", "Gold Elf");
 		public final Subrace WILD_ELF = new Subrace(Races.ELF, "Wild Elf", "");
 		public final Subrace WOOD_ELF = new Subrace(Races.ELF, "Wood Elf", "");
+
+		public final Subrace ROCK_TROLL = new Subrace(Races.TROLL, "Rock Troll", "Hill Troll");
+		public final Subrace DARK_TROLL = new Subrace(Races.TROLL, "Dark Troll", "");
+		public final Subrace STORM_TROLL = new Subrace(Races.TROLL, "Storm Troll", "");
 	}
 }
