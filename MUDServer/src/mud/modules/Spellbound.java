@@ -6,10 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import mud.MUDObject;
-import mud.game.Ability;
-import mud.game.Faction;
-import mud.game.PClass;
-import mud.game.Skill;
+import mud.game.*;
 import mud.interfaces.Ruleset;
 import mud.misc.Slot;
 import mud.misc.SlotType;
@@ -73,6 +70,10 @@ public class Spellbound extends GameModule {
         // TODO Auto-generated method stub
         // add/initialize slots
         player.addSlot("helmet",   new Slot(SlotTypes.HEAD,   ItemTypes.ARMOR));
+        if (player.getRace().toString().equals("Two Headed Troll")) {
+            player.addSlot("helmet2",   new Slot(SlotTypes.HEAD,   ItemTypes.ARMOR));
+            player.addSlot("necklace2", new Slot(SlotTypes.NECK,   ItemTypes.NECKLACE));
+        }
         player.addSlot("necklace", new Slot(SlotTypes.NECK,   ItemTypes.NECKLACE));
         player.addSlot("armor",    new Slot(SlotTypes.CHEST,  ItemTypes.ARMOR));
         player.addSlot("cloak",    new Slot(SlotTypes.BACK,   ItemTypes.CLOTHING));
@@ -86,6 +87,18 @@ public class Spellbound extends GameModule {
         player.addSlot("weapon",   new Slot(SlotTypes.RHAND,  ItemTypes.WEAPON, ItemTypes.WAND));
         player.addSlot("weapon1",  new Slot(SlotTypes.LHAND,  ItemTypes.WEAPON, ItemTypes.WAND));
         player.addSlot("weapon2",  new Slot(SlotTypes.HANDS,  ItemTypes.WEAPON));
+        if (player.getRace().toString().equals("Four Armed Troll")) {
+            player.addSlot("ring7",    new Slot(SlotTypes.FINGER, ItemTypes.RING));
+            player.addSlot("ring8",    new Slot(SlotTypes.FINGER, ItemTypes.RING));
+            player.addSlot("ring9",    new Slot(SlotTypes.FINGER, ItemTypes.RING));
+            player.addSlot("ring10",    new Slot(SlotTypes.FINGER, ItemTypes.RING));
+            player.addSlot("ring11",    new Slot(SlotTypes.FINGER, ItemTypes.RING));
+            player.addSlot("ring12",    new Slot(SlotTypes.FINGER, ItemTypes.RING));
+            player.addSlot("gloves2",   new Slot(SlotTypes.HANDS,  ItemTypes.CLOTHING));
+            player.addSlot("weapon3",   new Slot(SlotTypes.RHAND,  ItemTypes.WEAPON, ItemTypes.WAND));
+            player.addSlot("weapon4",  new Slot(SlotTypes.LHAND,  ItemTypes.WEAPON, ItemTypes.WAND));
+            player.addSlot("weapon5",  new Slot(SlotTypes.HANDS,  ItemTypes.WEAPON));
+        }
         player.addSlot("belt",     new Slot(SlotTypes.WAIST,  ItemTypes.CLOTHING));
         player.addSlot("boots",    new Slot(SlotTypes.FEET,   ItemTypes.CLOTHING));
         player.addSlot("other",    new Slot(SlotTypes.NONE,   ItemTypes.NONE ));

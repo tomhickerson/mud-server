@@ -134,5 +134,8 @@ public class Race {
 		public final Subrace ROCK_TROLL = new Subrace(Races.TROLL, "Rock Troll", "Hill Troll");
 		public final Subrace DARK_TROLL = new Subrace(Races.TROLL, "Dark Troll", "");
 		public final Subrace STORM_TROLL = new Subrace(Races.TROLL, "Storm Troll", "");
+		public final Subrace ICE_TROLL = new Subrace(Races.TROLL, "Ice Troll", "");
+		public final Subrace TWO_HEADED_TROLL = new Subrace(Races.TROLL, "Two Headed Troll", "");
+		public final Subrace FOUR_ARMED_TROLL = new Subrace(Races.TROLL, "Four Armed Troll", "");
 	}
 }
