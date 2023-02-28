@@ -3038,10 +3038,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 							send("Game> Failed to unload " + args[1] + " with command name " + args[0], client);
 						}
 					}
-					else if( cmdIs(cmd, "@reload") ) {
-						if (arg.equals("")) sys_reload();
-						else                sys_reload(arg);
-					}
+					// sys_reload for areas will be here later
 					else if( cmdIs(cmd, "@shutdown") )   cmd_shutdown(arg, client);
 					else if( cmdIs(cmd, "@sethour") )    cmd_sethour(arg, client);
 					else if( cmdIs(cmd, "@setminute") )  cmd_setminute(arg, client);
@@ -18535,7 +18532,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 	// System (sys) Functions
 
 	// reload system help
-	// public void sys_help_reload() throws NullPointerException
+
 	public void help_reload() {
 		for (final String helpFileName : generateHelpFileIndex()) {
 			String helpLines[] = Utils.loadStrings( resolvePath(HELP_DIR, helpFileName) );
@@ -18545,51 +18542,8 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 	}
 
 	/*
-	 * 
-	 * DO NOT USE SYS_RELOAD()! IT WILL RESULT IN A NON-CLEAN WORLD STATE!
-	 * 
-	 * NOTE: Among other things, a successful reload will likely cause GC errors
-	 * and heap error and other weird stuff to happen.
-	 * 
-	 * This should probably do some of the things live backup does to reset
-	 * certain parts of the server. It would also likely to be wise to remove
-	 * players from the world while retaining client <-> player mappings for
-	 * later restoration. Setting input hold and stopping/pausing the time loop
-	 * is recommended. In addition certain post db loading steps should be done
-	 * again as well.
+	TODO redo the sys_reload for areas, after we figure out new area loading
 	 */
-	public void sys_reload() {
-		// tell us that the database is being loaded (supply custom message?)
-		send("Game> Loading Database!");
-
-		// clear database, etc
-		objectDB.clear();
-
-		final ObjectLoader loader = new ObjectLoader(this, objectDB);
-
-		// load objects from databases
-		loader.loadObjects(GameUtils.loadListDatabase(DB_FILE), this.logger);
-
-		// tell us that loading is done (supply custom message?)
-		send("Game> Done.");
-	}
-
-	// highly dangerous test function below
-	public void sys_reload(final String filename) {
-		// tell us that the database is being loaded (supply custom message?)
-		send("Game> Loading Database!");
-
-		// clear database, etc
-		objectDB.clear();
-
-		final ObjectLoader loader = new ObjectLoader(this, objectDB);
-
-		// load objects from databases
-		loader.loadObjects(GameUtils.loadListDatabase(DB_FILE), this.logger);
-
-		// tell us that loading is done (supply custom message?)
-		send("Game> Done.");
-	}
 
 	/**
 	 * Backup files, either to the specified file name, or to the default one.
@@ -18732,19 +18686,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 	
 	// TODO hot or cold restart
 	private void restart() {
-		/*
-		this.s = new Server(this, port);         // initialize the server object
-		
-		new Thread(this.s, "server").start();    // start it in a thread
-		
-		System.out.println("Server Startup!\n"); // tell us the server has started
-		
-		help_reload();                           // reload the help files
-		sys_reload();                            // load the database from disk
-		
-		this.running = true;
-		*/
-		
 		main( serverArgs );
 	}
 	
