@@ -19092,20 +19092,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		return result;
 	}
 
-	/*
-	 * public static enum Telnet { SE((byte) 240), NOP((byte) 241), DM((byte)
-	 * 242), BRK((byte) 243), IP((byte) 244), AO((byte) 245), AYT((byte) 246),
-	 * EC((byte) 247), EL((byte) 248), GA((byte) 249), SB((byte) 250),
-	 * WILL((byte) 251), WONT((byte) 252), DO((byte) 253), DONT((byte) 254),
-	 * IAC((byte) 255);
-	 * 
-	 * public Byte b;
-	 * 
-	 * Telnet(Byte b) { this.b = b; }
-	 * 
-	 * public Byte toByte() { return this.b; } }
-	 */
-
 	/* Spells specific server methods */
 	/**
 	 * Get spell object given the name of the spell
@@ -19201,14 +19187,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 	protected boolean hasLineOfSight(Room room, Point origin, Point goal) {
 		final Point temp = new Point( origin );
 
-		/*
-		 * int x_pos = origin.getX(); // get origin X coord int y_pos =
-		 * origin.getY(); // get origin Y coord
-		 * 
-		 * int d_x_pos = goal.getX(); // get goal X coord int d_y_pos =
-		 * goal.getY(); // get goal Y coord
-		 */
-
 		List<MUDObject> objects = objectDB.getByRoom(room);
 
 		while (!temp.equals(goal)) {
@@ -19272,25 +19250,15 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 				final Faction faction = player.getFaction();
 				
 				if (active_character) {
-					//client.write("" + Colors.YELLOW);
-					
-					//send(n + ") " + player.getName(), client);
-					//send(Utils.padLeft("", ' ', 22) + player.getRace().getName() + " [" + ((faction != null) ? faction.getName() :  "No Faction") + "]", client);
-					//send(Utils.padLeft("", ' ', 22) + "Class " + player.getPClass().getName() + ", Level " + player.getLevel(), client);
-					
+
 					output.add("" + Colors.YELLOW + n + ") " + player.getName() );
 					output.add( Utils.padLeft("", ' ', 22) + player.getRace().getName() + " [" + ((faction != null) ? faction.getName() :  "No Faction") + "]" );
 					output.add( Utils.padLeft("", ' ', 22) + "Class " + player.getPClass().getName() + ", Level " + player.getLevel() + "" + Colors.WHITE );
 
-					//client.write("" + Colors.WHITE);
-
 					active_character = false;
 				}
 				else {
-					//send(n + ") " + player.getName(), client);
-					//send(Utils.padLeft("", ' ', 22) + player.getRace().getName() + " [" + ((faction != null) ? faction.getName() :  "No Faction") + "]", client);
-					//send(Utils.padLeft("", ' ', 22) + "Class " + player.getPClass().getName() + ", Level " + player.getLevel(), client);
-					
+
 					output.add( n + ") " + player.getName() );
 					output.add( Utils.padLeft("", ' ', 22) + player.getRace().getName() + " [" + ((faction != null) ? faction.getName() :  "No Faction") + "]" );
 					output.add( Utils.padLeft("", ' ', 22) + "Class " + player.getPClass().getName() + ", Level " + player.getLevel() );
@@ -19299,28 +19267,17 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 				n++;
 			}
 
-			//send("", client);
-			//send("Slots Remaining: " + (account.getCharLimit() - account.getCharacters().size()), client);
-			
 			output.add("");
 			output.add( "Slots Remaining: " + (account.getCharLimit() - account.getCharacters().size()) );
-
-			//send(colors(divider, "green"), client);
 			output.add( colors(divider, "green") );
 
-			//send("Type the # or name of a character above to login or choose an action below.", client);
 			output.add("Type the # or name of a character above to login or choose an action below.");
-			
-			//send(colors(divider, "green"), client);
+
 			output.add( colors(divider, "green") );
-			
-			//send("(N)ew character     | (L)ink character   | (U)nlink character | (R)eorder", client);
-			//send("(E)nter description | (D)elete character | (C)hange password  | (Q)uit", client);
-			
+
 			output.add("(N)ew character     | (L)ink character   | (U)nlink character | (R)eorder");
 			output.add("(E)nter description | (D)elete character | (C)hange password  | (Q)uit");
-			
-			//send(colors(divider, "green"), client);
+
 			output.add( colors(divider, "green") );
 			
 			send(output, client);
@@ -19419,7 +19376,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 			msg.markSent();
 			break;
 		case SYSTEM:
-			//send(msg.getMessage(), msg.getRecipient().getClient());
 			send(message, recip.getClient());
 			
 			msg.markSent();
@@ -19511,14 +19467,8 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 			}
 			
 			send("Location: " + locInfo, client);
-			
-			// send("Coordinates:", client);
 
 			final Point position = m.getPosition();
-
-			/*
-			 * send("X: " + position.getX(), client); send("Y: " + position.getY(), client); send("Z: " + position.getZ(), client);
-			 */
 
 			send("Coordinates: ( " + position.getX() + ", " + position.getY() + ", " + position.getZ() + " )", client);
 
@@ -19599,13 +19549,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 			send("Destination: " + dest_s, client);
 		}
 
-		// send("Coordinates:", client);
-
 		final Point position = exit.getPosition();
-
-		/*
-		 * send("X: " + position.getX(), client); send("Y: " + position.getY(), client); send("Z: " + position.getZ(), client);
-		 */
 
 		send("Coordinates: ( " + position.getX() + ", " + position.getY() + ", " + position.getZ() + " )", client);
 	}
@@ -19652,27 +19596,11 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		
 		send("Location: " + loc_s, client);
 
-		// send("Coordinates:", client);
-
 		Point position = player.getPosition();
-
-		/*
-		 * send("X: " + position.getX(), client); send("Y: " + position.getY(),
-		 * client); send("Z: " + position.getZ(), client);
-		 */
 
 		send("Coordinates: ( " + position.getX() + ", " + position.getY() + ", " + position.getZ() + " )", client);
 
 		// helmet, necklace, armor, cloak, rings, gloves, weapons, belt, boots
-
-		/*
-		 * debug("RING1: " + player.getSlots().get("ring1").getItem() + "\t" +
-		 * "RING2: " + player.getSlots().get("ring2").getItem());
-		 * debug("RING3: " + player.getSlots().get("ring3").getItem() + "\t" +
-		 * "RING4: " + player.getSlots().get("ring4").getItem());
-		 * debug("RING5: " + player.getSlots().get("ring5").getItem() + "\t" +
-		 * "RING6: " + player.getSlots().get("ring6").getItem());
-		 */
 
 		// TODO fix all of this kludging, this depends far too heavily on
 		// certain named slots existing
@@ -19680,10 +19608,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 			String color = getDisplayColor("thing");
 			String r1 = colors("RING" + i, color);
 			String r2 = colors("RING" + (i + 1), color);
-
-			// send("RING" + i + ": " + player.getSlots().get("ring" +
-			// i).getItem() + "\t" + "RING" + (i + 1) + ": " +
-			// player.getSlots().get("ring" + (i + 1)).getItem(), client);
 			if (player.getSlot("ring" + i) != null && player.getSlot("ring" + (i + 1)) != null) {
 				send(r1 + ": " + player.getSlot("ring" + i).getItem() + "\t" + r2 + ": " + player.getSlot("ring" + (i + 1)).getItem(), client);
 			}
@@ -19700,8 +19624,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		send(colors(room.getName() + "(#" + room.getDBRef() + ")", getDisplayColor(room.type)), client);
 		
 		final String typeName = room.type.getName();
-		
-		// send("Type: " + ObjectFlag.firstInit(m.getFlags()) + " Flags: " + ObjectFlag.toInitString(m.getFlags()), client);
 		send("Type: " + typeName + " Flags: " + ObjectFlag.toInitString(room.getFlags()), client);
 
 		send("Room Type: " + room.getRoomType().toString(), client);
@@ -19947,16 +19869,12 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 				// send("", client);
 			}
 
-			// send(gameDate(), client); // the actual date of the in-game year
-			// send("", client);
-
 			// TODO make this get it's footer data from somewhere else to make it customizable
 			if (player.getConfigOption("hud_enabled")) {
 				//send(getFooter("--[%S]%s[ %Tam ]--[ %D ]--"), client);
 				output.add( getFooter("--[%S]%s[ %Tam ]--[ %D ]--", line_limit) );
 			}
 			else {
-				//send(Utils.padRight("", '-', line_limit), client);
 				output.add( Utils.padRight("", '-', line_limit) );
 			}
 
@@ -20029,22 +19947,18 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 			for (final NPC npc : objectDB.getNPCsByRoom( room )) {
 				if ( !room.hasFlag(ObjectFlag.SILENT) ) {
-					//send(colors("[" + npc.getStatus() + "] " + npc.getName() + "(#" + npc.getDBRef() + ")", "cyan"), client);
 					output.add( colors("[" + npc.getStatus() + "] " + npc.getName() + "(#" + npc.getDBRef() + ")", "cyan") );
 				}
 				else {
-					//send(colors("[" + npc.getStatus() + "] " + npc.getName(), "cyan"), client);
 					output.add( colors("[" + npc.getStatus() + "] " + npc.getName(), "cyan") );
 				}
 			}
 
 			for (final Creature creep : objectDB.getCreaturesByRoom( room )) {
 				if ( !room.hasFlag(ObjectFlag.SILENT) ) {
-					//send(colors(creep.getName() + "(#" + creep.getDBRef() + ")", "cyan"), client);
 					output.add( colors(creep.getName() + "(#" + creep.getDBRef() + ")", "cyan") );
 				}
 				else {
-					//send(colors(creep.getName(), "cyan"), client);
 					output.add( colors(creep.getName(), "cyan") );
 				}
 			}
@@ -20074,7 +19988,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 						boolean sdesc = false; // short descriptions (true=yes,false=no)
 
 						if ( sdesc ) { // if using short descriptions
-							//send(evaluate(player, player1), client);
 							output.add( evaluate(player, player1) );
 						}
 						else { // otherwise
@@ -20083,22 +19996,17 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 							
 							if( mount ) {
 								if( knownPlayer ) {
-									//send(colors("[" + pStatus + "] " + pName + "( riding a " + player1.mount.getName() + " )", dcolor), client);
 									output.add( colors("[" + pStatus + "] " + pName + "( riding a " + player1.mount.getName() + " )", dcolor) );
 								}
 								else {
-									//send(colors("[" + pStatus + "] " + pCName + "( riding a " + player1.mount.getName() + " )", dcolor), client);
 									output.add( colors("[" + pStatus + "] " + pCName + "( riding a " + player1.mount.getName() + " )", dcolor) );
 								}
 							}
 							else {
 								if( knownPlayer ) {
-									//send(colors("[" + pStatus + "] " + pName, dcolor), client);
-									//output.add( colors("[" + pStatus + "] " + pName, dcolor) );
 									output.add( colors("[", "blue") + colors(pStatus, "green") + colors("]", "blue") + " " + colors(pName, dcolor) );
 								}
 								else {
-									//send(colors("[" + pStatus + "] " + pCName, dcolor), client);
 									output.add( colors("[" + pStatus + "] " + pCName, dcolor) );
 								}
 							}
@@ -20344,7 +20252,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		 * only heal myself to 90 (9/10 full heal).
 		 */
 
-		//try {
 			final String effectName = effect.getName();
 			String temp;
 			
@@ -20507,13 +20414,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 			player.updateCurrentState();
 
 			return true;
-		//}
-		/*catch (final Exception e) {
-			// TODO why are catching just any old exception here?
-			debug ( e );
-			
-			return false;
-		}*/
+
 	}
 	
 	// TODO these two methods seems somewhat redundant
