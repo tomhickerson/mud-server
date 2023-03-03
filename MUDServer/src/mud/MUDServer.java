@@ -20975,12 +20975,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		int raceNum;             // 9 - player race number (enum ordinal)
 		int classNum;            // 10 - player class number (enum ordinal)
 
-		/*
-		 * debug("Database Reference Number: " + oDBRef); debug("Name: " +
-		 * oName); debug("Flags: " + oFlags); debug("Description: " + oDesc);
-		 * debug("Location: " + oLocation);
-		 */
-
 		Integer[] oStats = Utils.stringsToIntegers(os);
 		int[] oMoney = Utils.stringsToInts(om);
 
