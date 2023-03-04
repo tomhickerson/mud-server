@@ -21107,29 +21107,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 	 * @param template the item to base the new one on
 	 * @return         the new item we just created
 	 */
-	/*
-	 * private Item createItem(Item template) { if( !template.isUnique() ) {
-	 * final Item item = createItems(template, 1).get(0);
-	 * item.setLocation(Constants.WELCOME_ROOM); return item }
-	 * 
-	 * return null; }
-	 * 
-	 * private Item createItem(Weapon template) { if( !template.isUnique() ) {
-	 * final Item item = createItems(template, 1).get(0);
-	 * item.setLocation(Constants.WELCOME_ROOM); return item; } return null; }
-	 * 
-	 * private Item createItem(Book template) { if( !template.isUnique() ) {
-	 * final Item item = createItems(template, 1).get(0);
-	 * item.setLocation(Constants.WELCOME_ROOM); return item; }
-	 * 
-	 * return null; }
-	 * 
-	 * private Item createItem(Armor template) { if( !template.isUnique() ) {
-	 * final Item item = createItems(template, 1).get(0);
-	 * item.setLocation(Constants.WELCOME_ROOM); return item; }
-	 * 
-	 * return null; }
-	 */
 
 	/**
 	 * Create new items using an existing item as a template. More or less a
@@ -21328,22 +21305,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 				debug(changeText);
 			}
 		}
-		
-		/*for (final Room room : objectDB.getWeatherRooms()) {
-			room.getWeather().nextState();
-
-			final WeatherState ws = room.getWeather().getState();
-			
-			// if no change occurred
-			if (ws.upDown != 1 && ws.upDown != -1) return;
-
-			String changeText = (( ws.upDown == 1 ) ? ws.transUpText : ws.transDownText);
-
-			if (changeText != null) {
-				addMessage( new Message(changeText, room) );
-				debug(changeText);
-			}
-		}*/
 	}
 
 	/* Help, Topic Files Stuff */
@@ -21552,39 +21513,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 				//continue;
 			}
-
-			/*
-			 * 
-			 * // newline check nl_begin = word.startsWith("$n"); nl_middle =
-			 * word.contains("$n"); nl_end = word.endsWith("$n");
-			 * 
-			 * //debug("Newline? " + nl_middle, 4);
-			 * 
-			 * // need to integrate the following three cases into the three
-			 * primary cases somehow // converting the array above into a list
-			 * so that I break words containing \n up // and insert the other
-			 * part before the following word might help
-			 * 
-			 * if(nl_begin) { //debug("send", 4); send(result, client); // send
-			 * the current contents of the buffer result.delete(0,
-			 * result.length()); // clear the buffer temp = word.substring(
-			 * word.indexOf("$n") + 2 ); // everything after '$n'
-			 * result.append(temp); // append the word after the newline }
-			 * 
-			 * // append the first part (before the \n) if(nl_middle) { temp =
-			 * word.substring(0, word.indexOf("$n"));
-			 * result.append(" ").append(temp); //debug("send", 4); send(result,
-			 * client); result.delete(0, result.length());
-			 * result.append(word.substring(word.indexOf("$n") + 1,
-			 * word.length())); continue; }
-			 * 
-			 * if(nl_end) { temp = word.substring(0, word.indexOf("$n")); // get
-			 * everything before the newline result.append(" ").append( temp );
-			 * // append everything before the newline //debug("send", 4);
-			 * send(result, client); // send the current contents of the buffer
-			 * result.delete(0, result.length()); // clear the buffer continue;
-			 * }
-			 */
 
 			else {
 				if (result.length() < 1) {
@@ -22105,21 +22033,8 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 		for (Item item : room.getItems()) {
 			debug(item.getName());
-			/*
-			 * if( !item.hasFlag(ObjectFlag.DARK) ) { objectsFound.add(item); }
-			 */
 			objectsFound.add(item);
 		}
-
-		// are Players and NPCs really objects for this consideration?
-		/*
-		 * for( Player player : objectDB.getPlayersByRoom(room.getDBRef()) ) {
-		 * if( !player.hasFlag(ObjectFlag.DARK) ) { objectsFound.add(player); }
-		 * }
-		 * 
-		 * for( NPC npc : objectDB.getNPCsByRoom(room.getDBRef()) ) { if(
-		 * !npc.hasFlag(ObjectFlag.DARK) ) { objectsFound.add(npc); } }
-		 */
 
 		return objectsFound;
 	}
@@ -22250,12 +22165,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 			}
 
 			if (part == END) {
-				/*boolean validSender = !sender.equals("");
-				boolean validRecipient = !recipient.equals("");
-				boolean validSubject = !subject.equals("");
-				boolean validMessage = !message.equals("");
-				boolean validFlag = flag != ' ' && Utils.mkList("A", "R", "U").contains("" + flag);*/
-				
+
 				boolean validSdr = !sender.equals("");
 				boolean validRpt = !recipient.equals("");
 				boolean validSub = !subject.equals("");
@@ -22397,24 +22307,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 	 * 
 	 * @param player
 	 */
-	/*public void checkTimers(Player player) {
-		List<EffectTimer> etl = getEffectTimers(player);
-		List<EffectTimer> eff_timers = new LinkedList<EffectTimer>();
-
-		for (final EffectTimer etimer : etl) {
-			if (etimer.getTimeRemaining() <= 0 && !etimer.getEffect().isPermanent()) {
-				eff_timers.add(etimer);
-			}
-		}
-
-		for (final EffectTimer etimer : eff_timers) {
-			removeEffect(player, etimer.getEffect());
-			
-			etl.remove(etimer);
-		}
-
-		eff_timers.clear();
-	}*/
 
 	/**
 	 * check for expired timers and clear them
@@ -23143,18 +23035,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 		c.writeln("Done.");
 	}
-
-	/*
-	 * int value(Item item) { if( canUse( null, item ) ) { // check "can use" //
-	 * determine value in copper/weight if( getSkill(Skills.KNOWLEDGE) ) { //
-	 * really this should be some kind of trading knowledge int copperValue =
-	 * item.getCost().numOfCopper(); int weight = (int) Math.round(
-	 * item.getWeight() ); return copperValue / weight; }
-	 * 
-	 * return 1; }
-	 * 
-	 * return 0; }
-	 */
 
 	/**
 	 * Determine if a player can use an item. E.g. if you are trying to use a
