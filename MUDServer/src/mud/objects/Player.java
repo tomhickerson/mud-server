@@ -41,6 +41,7 @@ import mud.objects.items.Shield;
 import mud.objects.items.Weapon;
 import mud.quest.Quest;
 import mud.rulesets.d20.*;
+import mud.rulesets.spb.Mana;
 import mud.utils.EditList;
 import mud.utils.Landmark;
 import mud.utils.Pager;
@@ -174,7 +175,8 @@ public class Player extends MUDObject implements Mobile
 	protected Faction faction;
 	
 	protected SpellBook spells = null;                  // spells [null if not a spellcaster]
-	
+	protected transient ArrayList<Mana> manas = new ArrayList<Mana>();
+
 	protected transient Deque<Spell> spellQueue = null; // spell queue [null if not a spellcaster]
 	protected transient Spell lastSpell = null;         // last spell cast [null if not a spellcaster]
 
@@ -842,6 +844,10 @@ public class Player extends MUDObject implements Mobile
 
 	public void addSkill(final Skill skill) {
 		this.skills.put(skill,  0);
+	}
+
+	public void addMana(Mana mana) {
+		this.manas.add(mana);
 	}
 
 	public int getSkill(final Skill skill) {
