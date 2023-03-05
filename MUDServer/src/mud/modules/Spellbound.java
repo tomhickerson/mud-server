@@ -12,7 +12,7 @@ import mud.misc.Slot;
 import mud.misc.SlotType;
 import mud.misc.SlotTypes;
 import mud.objects.*;
-import mud.rulesets.spb.SpellboundGGG;
+import mud.rulesets.spb.*;
 
 public class Spellbound extends GameModule {
     private String name = "Spellbound";
@@ -103,6 +103,10 @@ public class Spellbound extends GameModule {
         player.addSlot("boots",    new Slot(SlotTypes.FEET,   ItemTypes.CLOTHING));
         player.addSlot("other",    new Slot(SlotTypes.NONE,   ItemTypes.NONE ));
 
+        player.addMana(new Mana(Colors.RED.toString(),
+                Virtues.FORTITUDE.toString(), Vices.ANGER.toString(), new Integer(0)));
+        player.addMana(new Mana(Colors.ORANGE.toString(),
+                Virtues.SACRIFICE.toString(), Vices.GLUTTONY.toString(), new Integer(0)));
     }
 
     @Override
