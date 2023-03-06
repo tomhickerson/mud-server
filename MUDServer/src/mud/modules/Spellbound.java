@@ -103,10 +103,21 @@ public class Spellbound extends GameModule {
         player.addSlot("boots",    new Slot(SlotTypes.FEET,   ItemTypes.CLOTHING));
         player.addSlot("other",    new Slot(SlotTypes.NONE,   ItemTypes.NONE ));
 
+        // TODO we will probably have to change the underlying storage to hashmap
         player.addMana(new Mana(Colors.RED.toString(),
                 Virtues.FORTITUDE.toString(), Vices.ANGER.toString(), new Integer(0)));
         player.addMana(new Mana(Colors.ORANGE.toString(),
                 Virtues.SACRIFICE.toString(), Vices.GLUTTONY.toString(), new Integer(0)));
+        player.addMana(new Mana(Colors.YELLOW.toString(),
+                Virtues.JUSTICE.toString(), Vices.AVARICE.toString(), new Integer(0)));
+        player.addMana(new Mana(Colors.GREEN.toString(),
+                Virtues.HOPE.toString(), Vices.ENVY.toString(), new Integer(0)));
+        player.addMana(new Mana(Colors.BLUE.toString(),
+                Virtues.COMPASSION.toString(), Vices.SLOTH.toString(), new Integer(0)));
+        player.addMana(new Mana(Colors.INDIGO.toString(),
+                Virtues.HUMILITY.toString(), Vices.PRIDE.toString(), new Integer(0)));
+        player.addMana(new Mana(Colors.VIOLET.toString(),
+                Virtues.FAITH.toString(), Vices.LUST.toString(), new Integer(0)));
     }
 
     @Override
