@@ -7,11 +7,15 @@ A MUD server written in Java which aspires to be something of a general purpose 
 
 This code is very much in an unfinished state, despite the fact that it is fairly stable and usable. As such, there may occasionally be radical shifts in the inner workings in the future. It would be wise to regularly backup the database if you use this code as, despite the above, it may have occasional stability problems and attempting to switch to a newer version may result in corrupted data and/or the server may someday utilize an alternate approach for data storage.
 
-This code requires at least Java 8 (1.8) due to use of streams and predicates.
+This code requires at least Java 8 (1.8) due to use of streams and predicates.  Also using Maven 3.6.3 for building.
 
 ### Libraries
 
 [Google-gson](https://github.com/google/gson) is used for handling JSON files in certain places.
+
+### How to Build
+
+To test out code, just use 'mvn clean compile' or 'mvn clean install' and to generate the jar file use 'mvn clean package'
 
 ### Usage
 
@@ -50,5 +54,7 @@ Pay attention to the following Trello board for future plans and progress info:
 ### Copyright
 
 Copyright (c) 2012-2019 Jeremy Harton. See LICENSE.txt for further details.
+
+All updates to this fork are Copyright (c) 2023 Tom Hickerson.
 
 The license given basically applies to all files in the source (MUDServer/src) directory unless otherwise specified here or in a file (license-exclusions.txt) within the package/folder in question. It does not apply to any data files that might be included.
