@@ -17,5 +17,17 @@ public class Mana {
         return score;
     }
 
+    public String getColor() {
+        return color;
+    }
+
+    public String getVirtue() {
+        return virtue;
+    }
+
+    public String getVice() {
+        return vice;
+    }
+
 
 }
