@@ -175,7 +175,8 @@ public class Player extends MUDObject implements Mobile
 	protected Faction faction;
 	
 	protected SpellBook spells = null;                  // spells [null if not a spellcaster]
-	protected transient ArrayList<Mana> manas = new ArrayList<Mana>();
+	// protected transient ArrayList<Mana> manas = new ArrayList<Mana>();
+	protected transient HashMap<String, Mana> manas = new HashMap<String, Mana>();
 
 	protected transient Deque<Spell> spellQueue = null; // spell queue [null if not a spellcaster]
 	protected transient Spell lastSpell = null;         // last spell cast [null if not a spellcaster]
@@ -847,7 +848,12 @@ public class Player extends MUDObject implements Mobile
 	}
 
 	public void addMana(Mana mana) {
-		this.manas.add(mana);
+		this.manas.put(mana.getColor(), mana);
+	}
+
+	public Integer getManaScore(String color) {
+		Mana colorMana = this.manas.get(color);
+		return colorMana.getScore();
 	}
 
 	public int getSkill(final Skill skill) {
