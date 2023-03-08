@@ -17116,45 +17116,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 	/* Data Saving Functions */
 
 	public void saveAccounts() {
-		/*for (final Account a : acctMgr.getAccounts()) {
-			String[] temp = new String[11];
-
-			temp[0] = "" + a.getCreated();
-			temp[1] = "" + a.getModified();
-			// temp[2] = "" + a.getArchived();
-			temp[2] = "";
-
-			temp[3] = "" + a.getI d();
-			temp[4] = "" + a.getStatus().ordinal();
-			temp[5] = a.getUsername();
-			temp[6] = a.getPassword();
-
-			temp[7] = "" + a.getCharLimit();
-
-			temp[8] = "" + a.isDisabled();
-
-			temp[9] = "" + a.getLastIPAddress();
-
-			final StringBuilder sb = new StringBuilder();
-
-			int index = 1;
-
-			for (final Player p : a.getCharacters()) {
-				sb.append(p.getName());
-				
-				if (index < a.getCharacters().size()) sb.append(", ");
-				
-				index++;
-			}
-
-			temp[10] = sb.toString();
-
-			for (final String s : temp) {
-				System.out.println(s);
-			}
-
-			System.out.println("");
-		}*/
 
 		FileOutputStream fos;
 		ObjectOutputStream oos;
