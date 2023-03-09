@@ -17221,26 +17221,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 	}
 
 	public void saveBoard(final BulletinBoard board) {
-		/*
-		 * File file; RandomAccessFile raf;
-		 * 
-		 * try { System.out.println(BOARD_DIR + board.getFilename());
-		 * 
-		 * file = new File(BOARD_DIR + board.getFilename()); raf = new
-		 * RandomAccessFile(file, "rws");
-		 * 
-		 * String line = ""; long pos = 0;
-		 * 
-		 * int message = 0;
-		 * 
-		 * while(raf.getFilePointer() < raf.length()) { pos =
-		 * raf.getFilePointer(); line = raf.readLine();
-		 * 
-		 * System.out.println("current position: " + pos);
-		 * System.out.println(line); } } catch(Exception e) {
-		 * e.printStackTrace(); }
-		 */
-
 		// I just want to overwrite the board file with the current state
 		System.out.println(BOARD_DIR + board.getFilename());
 
@@ -17364,17 +17344,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 				}
 			}
 		}
-
-		/*
-		 * LinkedList<Integer> ids = new LinkedList<Integer>();
-		 * 
-		 * for(Integer i : iamap.keySet()) { System.out.println(i); ids.add(i);
-		 * }
-		 * 
-		 * if( !ids.isEmpty() ) { Collections.sort(ids);
-		 * System.out.println(ids); last_account_id = ids.getLast(); } else
-		 * last_account_id = 0;
-		 */
 	}
 
 	/**
@@ -17575,8 +17544,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 					spell_reagents.add( new Reagent(reagentName) );
 				}
 			}
-			
-			//
+
 			final Spell newSpell = new Spell(tName, SpellType.ARCANE, School.ENCHANTMENT, 0, tCastMsg, spell_effects, spell_reagents);
 			
 			newSpell.setTargets( Spell.encodeTargets(tTargets) );
