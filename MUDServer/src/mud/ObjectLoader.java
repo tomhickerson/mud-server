@@ -351,14 +351,8 @@ public class ObjectLoader {
 						objectDB.addNPC(merchant);
 					}
 					else {
-
-						// NPC npc = new NPC(oDBRef, oName, oDesc, oLocation,
-						// "npc");
 						NPC npc = loadNPC(oInfo);
 						npc.setCName("npc");
-
-						// npc.addQuest(new Quest("Test", "Test", new
-						// Task("Test")));
 
 						debug("log.debug (db entry): " + npc.toDB(), 2);
 
@@ -516,12 +510,6 @@ public class ObjectLoader {
 		String oDesc = attr[3];
 		Integer oLocation = Utils.toInt(attr[4], Constants.VOID);
 
-		/*
-		 * debug("Database Reference Number: " + oDBRef); debug("Name: " +
-		 * oName); debug("Flags: " + oFlags); debug("Description: " + oDesc);
-		 * debug("Location: " + oLocation);
-		 */
-
 		String oPassword = attr[5];
 
 		Integer[] oStats = Utils.stringsToIntegers(attr[6].split(","));
@@ -589,15 +577,7 @@ public class ObjectLoader {
 		
 		oStats = Utils.stringsToIntegers( attr[6].split(",") ); // 6 - npc stats
 		oMoney = Utils.stringsToInts( attr[7].split(",") );     // 7 - npc money
-		
-		/*
-		debug("Database Reference Number: " + oDBRef);
-		debug("Name: " + oName);
-		debug("Flags: " + oFlags);
-		debug("Description: " + oDesc);
-		debug("Location: " + oLocation);
-		*/
-		
+
 		NPC npc = new NPC(oDBRef, oName, ObjectFlag.getFlagsFromString(oFlags), oDesc, oLocation, "", "IC", oStats, Coins.fromArray(oMoney));
 		
 		int access;   // 8 - npc permissions
@@ -753,12 +733,7 @@ public class ObjectLoader {
 			
 			return container;
 		}
-		/*else if (it == ItemTypes.DRINK) {
-			
-			final Drink drink;
-			
-			return drink;
-		}*/
+
 		else if (it == ItemTypes.POTION) {
 			int stack_size = Integer.parseInt(attr[7]);
 			String spellName = attr[8];
