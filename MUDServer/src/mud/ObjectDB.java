@@ -335,12 +335,6 @@ public final class ObjectDB implements ODBI {
 		addUnused( DBREF );
 	}
 
-	// Ensure object is in both maps, overwriting any object in the id map.
-	/*public void set(final int n, final MUDObject item) {
-        objsById.put(n, item);
-        objsByName.put(item.getName(), item);
-    }*/
-
 	public List<MUDObject> getObjects() {
 		return Collections.unmodifiableList( new ArrayList<MUDObject>(this.objsById.values()) );
 	}
