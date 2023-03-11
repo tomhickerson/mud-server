@@ -17274,8 +17274,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		GsonBuilder builder = new GsonBuilder(); // Or use new GsonBuilder().create();
 		
 		// NOTE: default representation of Date isn't bad...
-		//builder.registerTypeAdapter(Account.class, new AccountAdapter());
-		
+
 		builder.setPrettyPrinting();
 
 		Gson gson = builder.create();
