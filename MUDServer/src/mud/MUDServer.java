@@ -2027,7 +2027,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 		Utils.saveStrings( resolvePath(WORLD_DIR, worldName, "zones.txt"), zones );
 		
-		/*
+
 		// create topics directory
 		final File temp1 = new File(TOPIC_DIR);
 
@@ -2041,7 +2041,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		else {
 			System.out.println("Directory: " + temp1.getAbsolutePath() + " exists.");
 		}
-		 */
 	}
 
 	private void conversation_test() {
