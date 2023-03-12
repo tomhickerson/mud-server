@@ -1069,7 +1069,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		// Load Zones (only doing this here, because Rooms may be in a zone, and
 		// so by loading Zones first then rooms can be placed in them by the ObjectLoader
 		loadZones( resolvePath(WORLD_DIR, world, "zones.txt") );
-		
 
 		debug("");
 
@@ -23319,6 +23318,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 				continue;
 			}
 			else if (str.charAt(0) == '~') {
+				// find the XML file and read it
 				temp = new Zone(name, parent);
 				temp.setId(id);
 				zones.put(temp, 0);
