@@ -1068,7 +1068,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		// TODO be nice to do all these resolutions in one place..
 		// Load Zones (only doing this here, because Rooms may be in a zone, and
 		// so by loading Zones first then rooms can be placed in them by the ObjectLoader
-		//loadZones(WORLD_DIR + world + "\\zones.txt");
 		loadZones( resolvePath(WORLD_DIR, world, "zones.txt") );
 		
 
@@ -13070,13 +13069,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 		debug("# Params: " + params.length);
 
-		/*
-		 * if (!arg.equals("") && params.length == 1) { if
-		 * (params[0].equals("+new")) { Zone zone = new Zone(params[0], null);
-		 * zones.put(zone, 10); // store a new zone object
-		 * send("New Zone Established!", client); // tell us that it succeeded.
-		 * } }
-		 */
 		if (params.length >= 2) {
 			String[] args = params[1].split("=");
 			
@@ -13167,7 +13159,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		}
 		else {
 			send("Zones:", client);
-			//debug(zones.entrySet());
 
 			for (Zone zone : zones.keySet()) {
 				final Integer zoneID = zone.getId();
@@ -16011,11 +16002,8 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 				final String zoneName = zone.getName();
 
 				final Integer zoneSize = zone.getRooms().size();
-
-				// send("Zone - " + zone.getName() + "(" + zone.getId() + ")", client);
-
-				// send("" + zone.getName() + " ( " + zone.getRooms().size() + " Rooms )", client);
-				send(colors(zoneName + " [" + zoneID + "] ", "magenta") + " ( " + zoneSize + " Rooms )", client);
+				send(colors(zoneName + " [" + zoneID + "] ", "magenta") +
+						" ( " + zoneSize + " Rooms )", client);
 
 				for (final Room room : zone.getRooms()) {
 					send("- " + room.getName() + " (#" + room.getDBRef() + ")", client);
@@ -23373,10 +23361,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 				}
 			}
 		}
-
-
-		// System.out.println( getNameReferences() );
-		// System.out.println( zones.keySet() );
 	}
 	
 	/* Client State Methods */
