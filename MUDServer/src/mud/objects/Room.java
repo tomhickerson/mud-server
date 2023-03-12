@@ -61,6 +61,7 @@ public class Room extends MUDObject implements EventSource, Instance
 	
 	private transient List<Thing> things;                   // the objects the room contains (things)
 	private transient List<Item> items;                     // the objects the room contains (items)
+	private transient List<Creature> mobiles;				// the mobs located in the room, basic setup for now
 
 	public String music;                                    // the ambient background music for this room (filename, probably a wav file)
 	//public String timeOfDay = DAY;                        // replace this with an enum with one type per each or a hashmap string, boolean?
@@ -107,6 +108,7 @@ public class Room extends MUDObject implements EventSource, Instance
 		
 		this.items = new ArrayList<Item>();
 		this.things = new ArrayList<Thing>();
+		this.mobiles = new ArrayList<Creature>();
 		
 		this.listeners = new ArrayList<Player>();
 		this._listeners = new ArrayList<SayEventListener>();
@@ -140,6 +142,7 @@ public class Room extends MUDObject implements EventSource, Instance
 		
 		this.items = new ArrayList<Item>();
 		this.things = new ArrayList<Thing>();
+		this.mobiles = new ArrayList<Creature>();
 		
 		this.listeners = new ArrayList<Player>();
 		this._listeners = new ArrayList<SayEventListener>();
@@ -177,6 +180,7 @@ public class Room extends MUDObject implements EventSource, Instance
 		
 		this.items = new ArrayList<Item>();
 		this.things = new ArrayList<Thing>();
+		this.mobiles = new ArrayList<Creature>();
 		
 		this.listeners = new ArrayList<Player>();
 		this._listeners = new ArrayList<SayEventListener>();
@@ -441,6 +445,8 @@ public class Room extends MUDObject implements EventSource, Instance
 	public List<Thing> getThings() {
 		return this.things;
 	}
+
+	// adding and removing creatures here
 	
 	/* Triggers & Scripting */
 	public void setTrigger(TriggerType type, Trigger trigger) {
