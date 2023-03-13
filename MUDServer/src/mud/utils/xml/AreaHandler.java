@@ -22,6 +22,10 @@ public class AreaHandler extends DefaultHandler {
         return areList;
     }
 
+    public Zone getAreaZone() {
+        return areaZone;
+    }
+
     boolean bId = false;
     boolean bZoneName = false;
     boolean bTitle = false;
