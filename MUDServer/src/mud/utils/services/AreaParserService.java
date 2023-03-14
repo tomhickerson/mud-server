@@ -15,6 +15,10 @@ import java.util.List;
 public class AreaParserService {
     private Zone areaZone = null;
 
+    public AreaParserService() {
+        // instantiate here
+    }
+
     public Zone parseXml(String fileName) {
         SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
         try {
