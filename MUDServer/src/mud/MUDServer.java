@@ -22259,8 +22259,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 		expired_timers.clear();
 
-		///
-		
 		// Effect Timers (when they expire, effects are removed)
 		final List<SpellTimer> expired_timers2 = new LinkedList<SpellTimer>();
 
@@ -22314,7 +22312,8 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 	 * @param task
 	 */
 	public void scheduleTask(TimerTask task) {
-		this.timer.schedule(task, 0L); // immediate scheduling
+		this.timer.schedule(task, 0L);
+		// immediate scheduling
 	}
 
 	// START global Name Reference (nameref) access functions
