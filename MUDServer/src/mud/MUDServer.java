@@ -92,6 +92,7 @@ import mud.quest.*;
 import mud.rulesets.d20.*;
 import mud.utils.*;
 import mud.utils.Message.*;
+import mud.utils.services.PlayerValidationService;
 import mud.weather.*;
 
 /**
@@ -8444,8 +8445,9 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 	private void cmd_levelup(final String arg, final Client client) {
 		final Player player = getPlayer(client);
+		PlayerValidationService pvService = new PlayerValidationService();
 
-		if ( hasValidRace(player) && hasValidClass(player) ) {
+		if ( pvService.hasValidRace(player) && pvService.hasValidClass(player) ) {
 			if ( player.isLevelUp() ) {
 				if( player.getLevel() + 1 < max_levels ) {
 					player.changeLevelBy(1);
@@ -22824,46 +22826,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 	/* CHARacter GENeration (CHARGEN) - Utility Functions*/
 
-	/**
-	 * Determine if the specified Player has a valid race set. Checks to see if
-	 * you have a race other than Races.NONE and which is not a restricted race.
-	 * Also checks for null (which would be equally invalid).
-	 * 
-	 * @param player
-	 * @return
-	 */
-	private static boolean hasValidRace(Player player) {
-		final Race race = player.getRace();
-
-		boolean valid = false;
-
-		if( race != null && race != Races.NONE && !race.isRestricted() ) {
-			valid = true;
-		}
-
-		return valid;
-	}
-
-	/**
-	 * Determine if the specified Player has a valid class set. Checks to see if
-	 * you have a class other than Classes.NONE and which is not an NPC class.
-	 * Also checks for null (which would be equally invalid).
-	 * 
-	 * @param player
-	 * @return
-	 */
-	private static boolean hasValidClass(final Player player) {
-		final PClass pcl = player.getPClass();
-
-		boolean valid = false;
-
-		if (pcl != null && pcl != Classes.NONE && !pcl.isNPC()) {
-			valid = true;
-		}
-		
-		return valid;
-	}
-
 	private void reset_character(final Player player) {
 		// Reset ability scores (default is 0)
 		final Ability[] abilities = rules.getAbilities();
@@ -23180,16 +23142,12 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 		String temp = sb.toString();
 
-		// final Zone z = getZone( room );
 		final Zone zone = room.getZone();
 		
 		final Zone parent = (zone != null) ? zone.getParent() : null;
 
 		temp = temp.replace("%r", room.getName());
-		
-		//temp = (zone != null) ? temp.replace("%z", zone.getName()) : temp.replace("%z", "???");
-		//temp = (zone != null) ? (parent != null) ? temp.replace("%p", parent.getName()) : temp.replace("%p", "???") : temp;
-		
+
 		if( zone != null ) {
 			temp = temp.replace("%z", zone.getName());
 			temp = (parent != null) ? temp.replace("%p", parent.getName()) : temp.replace("%p", "???");
@@ -23198,10 +23156,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 			temp = temp.replace("%z", "???");
 			temp = temp.replace("%p", "null");
 		}
-
-		// temp = (z != null) ? (z.getParent() != null) ? temp.replace("%z",
-		// z.getName() + ", " + z.getParent().getName()) : temp.replace("%z",
-		// z.getName()) : temp.replace("%z", "???");
 
 		temp = temp.replace("%s", Utils.padRight("", '-', (lineLimit - (temp.length() - 2))));
 		
