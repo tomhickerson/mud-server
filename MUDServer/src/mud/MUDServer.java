@@ -21364,21 +21364,10 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 		String temp;
 
-		/*
-		 * boolean nl_begin = false; boolean nl_middle = false; boolean nl_end =
-		 * false;
-		 */
-
 		// TODO fix checking and handling of a newline marker (maybe make it #n
 		// or #nl/$n or $nl)
 		for (final String word : description.split(" ")) { // ^[a-zA-Z]$ ^\\b$
 			// TODO find a way to make sure this usually doesn't show up in
-			// debug
-			// debug("result: " + result, 4);
-			// debug("result (length): " + result.length(), 4);
-			// debug("next: " + word, 4);
-			// debug("next (length): " + word.length(), 4);
-
 			// newline handling
 			if ( word.contains("&n") ) {
 				Tuple<String, String> temp1 = new Tuple<String, String>("", word);
@@ -21405,18 +21394,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 						if (result.length() != 0) result.append(" " + temp1.one);
 						else                      result.append(temp1.one);
 
-						/*
-						 * if (result.length() < 1) { // append current word if
-						 * empty result.append(word); } else if (result.length()
-						 * + word.length() + 1 < line_limit) { // append current
-						 * word if it won't overflow
-						 * result.append(" ").append(word); }
-						 * 
-						 * else { // if it will overflow, send and clear, and
-						 * append current word send(result, client);
-						 * result.delete(0, result.length());
-						 * result.append(word); }
-						 */
 					}
 
 					System.out.println("WHILE (BOTTOM)");
@@ -21425,34 +21402,17 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 					System.out.println("result: " + result.toString());
 				}
 
-				// result.append(" " + temp1.one);
-
-				//continue;
-			}
-
-			else {
+			} else {
 				if (result.length() < 1) {
 					// append current word if empty
 					
 					result.append(word);
-				}
-				else if (result.length() + word.length() + 1 < line_limit) {
+				} else if (result.length() + word.length() + 1 < line_limit) {
 					// append current word if it won't overflow, consider the added space
 					
 					// debug("add", 4);
 					result.append(" ").append(word);
-				}
-
-				/*
-				 * // interesting idea, but not very good results else if
-				 * (result.length() + word.length() + 1 > line_limit) { // split
-				 * the word so it fits int max = line_limit - result.length() -
-				 * 1; debug("add", 4); if( max < word.length() ) {
-				 * result.append(" ").append(word.substring(0, max -
-				 * 1)).append("-"); } }
-				 */
-
-				else {
+				} else {
 					// if it will overflow: add string to return list, clear buffer, and append current word
 					
 					retVal.add( result.toString() );
