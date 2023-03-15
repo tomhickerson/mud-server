@@ -21247,15 +21247,12 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 			if (helpTable.containsKey(command)) {
 				// System.out.println("Help File Exists!");
 				return helpTable.get(aliases.get(name));
-			}
-			else return null;
-		}
-		else {
+			} else return null;
+		} else {
 			if (helpTable.containsKey(name)) {
 				// System.out.println("Help File Exists!");
 				return helpTable.get(name);
-			}
-			else return null;
+			} else return null;
 		}
 	}
 
@@ -21409,8 +21406,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 					result.append(word);
 				} else if (result.length() + word.length() + 1 < line_limit) {
 					// append current word if it won't overflow, consider the added space
-					
-					// debug("add", 4);
+
 					result.append(" ").append(word);
 				} else {
 					// if it will overflow: add string to return list, clear buffer, and append current word
@@ -21426,8 +21422,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 		// make sure we send the last word if there was only one left
 		if (result.length() > 0) {
-			// debug("send", 4);
-			//send(result.toString(), client);
 			retVal.add( result.toString() );
 			
 			result.delete(0, result.length());
