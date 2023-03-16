@@ -2184,18 +2184,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 			initCreatedThing(box);
 			box.setLocation(atrium2.getDBRef());
 			atrium2.addThing(box);
-			
-			// PipBuck (foe version of PipBoy from Bethesda's Fallout video games)
-			// Item pb = createItem("mud.foe.pipbuck", false);
 
-			// initCreatedItem(pb);
-
-			// pb.setLocation(box.getDBRef());
-			// pb.setLocation( atrium2.getDBRef() );
-			// box.insert(pb);
-			// atrium2.addItem( pb );
-
-			// StealthBuck - PipBuck Stealth/Invis Module
 			mud.foe.items.StealthBuck sb = new mud.foe.items.StealthBuck();
 
 			initCreatedItem(sb);
@@ -2257,9 +2246,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 			vending_machine.setLocation(atrium2.getDBRef());
 			atrium2.addThing(vending_machine);
-
-			// createItem("Notebook", ItemTypes.NONE,
-			// "A blank paper notebook, a remnant of pre-war Equestria.");
 
 			Book notebook = new Book();
 			notebook.setName("Notebook");
@@ -2544,14 +2530,8 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 			recipes.put("iron ingot", new Recipe("IRON_BAR", "iron ore"));
 			recipes.put("copper ingot", new Recipe("IRON_BAR", "copper ore"));
 			recipes.put("iron dagger", new Recipe("IRON_DAGGER", "iron ingot"));
-			
-			//Item IronIngot = createItem("Iron Ingot", "", -1);
-			//prototypes.put("mud.iron_ingot", IronIngot);
-			
+
 			prototypes.put("mud.iron_ingot", createItem("Iron Ingot", "", -1));
-			
-			//Item CopperIngot = createItem("Copper Ingot", "", -1);
-			//prototypes.put("mud.iron_ingot", IronIngot);
 
 			prototypes.put("mud.copper_ingot", createItem("Copper Ingot", "", -1));
 			
