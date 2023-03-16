@@ -92,6 +92,7 @@ import mud.quest.*;
 import mud.rulesets.d20.*;
 import mud.utils.*;
 import mud.utils.Message.*;
+import mud.utils.services.CreationService;
 import mud.utils.services.PlayerValidationService;
 import mud.weather.*;
 
@@ -285,6 +286,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 	private ConcurrentLinkedQueue<CMD> cmdQueue;
 	
 	final private ChatChanneler chan = new ChatChanneler();
+	private CreationService creationService = null;
 
 	// HashMaps
 	// dynamic - the contents of the hashmap may change while the server is running and in some cases that is very likely
@@ -1109,6 +1111,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		debug("Loading Database...");
 
 		final ObjectLoader loader = new ObjectLoader(this, objectDB);
+		creationService = new CreationService(objectDB, (Hashtable<String, Item>) prototypes);
 
 		// Load everything from databases by flag
 		loader.loadObjects(GameUtils.loadListDatabase(DB_FILE), logger);
@@ -5821,7 +5824,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 		// get a room
 		if (arg.equals("new")) { // create new room if no room to edit specified
-			creature = createCreature();
+			creature = creationService.createCreature();
 
 			// add new creature to database
 			// objectDB.addAsNew(creature);
@@ -5934,41 +5937,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		}
 	}
 
-	/**
-	 * Command: Create Item Permissions: Admin?
-	 * 
-	 * Arbitrarily create an item with the specified name
-	 * 
-	 * @param arg
-	 * @param client
-	 */
-	/*
-	 * private void cmd_createItem(String arg, Client client) { Player player =
-	 * getPlayer(client); Room room = getRoom(client);
-	 * 
-	 * //Item item = new Clothing(arg, 0, "cloak",1.0); // use the object
-	 * loading constructor for testing purposes
-	 * 
-	 * int location = getPlayer(client).getLocation(); int dbref = getNextDB();
-	 * 
-	 * Item item = new Clothing(arg, "A new piece of clothing.", location,
-	 * dbref, 0, ClothingType.SHIRT);
-	 * 
-	 * if (dbref == main.size()) { main.add(item.toDB()); main1.add(item); }
-	 * else { main.set(item.getDBRef(), item.toDB()); main1.set(item.getDBRef(),
-	 * item); }
-	 * 
-	 * int temp = 1;
-	 * 
-	 * if (temp == 1) { // test to see if it fits in the inventory
-	 * player.getInventory().add(item); send("Item named " + item.getName() +
-	 * "(#" + item.getDBRef() + ") created. " + item.getName() +
-	 * " has been placed in your inventory.", client); } else {
-	 * room.getItems().add(item); send("Item named " + item.getName() + "(#" +
-	 * item.getDBRef() + ") created. " + item.getName() +
-	 * " has been placed in your location.", client); } }
-	 */
-	
 	/**
 	 * Provide a way to get a basic answer to whether the player will
 	 * have success killing/defeating/destroying the enemy/target. A measure
@@ -20913,18 +20881,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 	}
 
 	/* Creation Functions */
-
-	public Creature createCreature() {
-		final Creature cre = new Creature();
-
-		cre.setFlags(EnumSet.noneOf(ObjectFlag.class));
-		cre.setLocation(Constants.VOID);
-
-		objectDB.addAsNew(cre);
-		objectDB.addCreature(cre);
-
-		return cre;
-	}
 
 	/**
 	 * create a new basic, untyped Item for us to modify and work on

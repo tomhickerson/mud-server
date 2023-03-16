@@ -13,7 +13,7 @@ import java.util.*;
 
 public class CreationService {
     private ObjectDB objectDB = null;
-    private Map<String, Item> prototypes = null;
+    private Hashtable<String, Item> prototypes = null;
 
     public CreationService(ObjectDB objectDB) {
         this.objectDB = objectDB;
@@ -52,9 +52,8 @@ public class CreationService {
         item.setDesc("");
         item.setLocation(-1);
 
-        // TODO remember to make the created items get passed through init
-        // objectDB.addAsNew(item);
-        // objectDB.addItem(item);
+        objectDB.addAsNew(item);
+        objectDB.addItem(item);
 
         return item;
     }
