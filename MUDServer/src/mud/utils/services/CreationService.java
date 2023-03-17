@@ -44,7 +44,7 @@ public class CreationService {
      *
      * @return
      */
-    private Item createItem() {
+    public Item createItem() {
         final Item item = new Item(-1);
 
         item.setName("");

@@ -8159,7 +8159,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 		// create new item if no item to edit specified
 		if (arg.equals("")) {
-			Item item = createItem();
+			Item item = creationService.createItem();
 
 			if (item.Edit_Ok) {
 				item.Edit_Ok = false; // further edit access not permitted (only one person may access at a time)
@@ -8996,7 +8996,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 				String resourceName = res.getName();
 				String resourceType = res.getType().name();
 				
-				Item ore = createItem(resourceName, "", -1);
+				Item ore = creationService.createItem(resourceName, "", -1);
 				
 				ore.setProperty("type",     resourceType.toLowerCase());
 				ore.setProperty("material", resourceName.toLowerCase());
