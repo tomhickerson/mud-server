@@ -2152,7 +2152,9 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		 */
 
 		/* FOE Items Testing -- NOT DB Safe */
-		if ( moduleLoaded("FOE") && DB_FILE.endsWith("foe.txt")) { // Fallout Equestria testing database (this code uses stuff from a package not included on github)
+		if ( moduleLoaded("FOE") && DB_FILE.endsWith("foe.txt")) {
+			// Fallout Equestria testing database
+			// (this code uses stuff from a package not included on github)
 			debug("Fallout Equestria (FOE) Item Testing setup");
 			
 			// TODO need to prototype all these things or something and then just make an instance in the test database
@@ -2328,13 +2330,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 			System.out.println("# of PipBuck(s) left: " + pipbuck_machine.getProperty("contents/pipbuck", Integer.class));
 
-			/*
-			 * mud.foe.Terminal terminal = new mud.foe.Terminal("Terminal");
-			 * terminal.setName("Terminal"); terminal.setDesc(
-			 * "A Stable-Tec terminal, old pre-war technology whose durability is plain to see. On the screen, passively glowing green text indicates that it awaits input."
-			 * ); terminal.setPowerState(mud.foe.Terminal.pwr_states.POWER_ON);
-			 */
-
 			mud.foe.Terminal terminal = new mud.foe.Terminal(
 					"Terminal",
 					"A Stable-Tec terminal, old pre-war technology whose durability is plain to see."
@@ -2425,11 +2420,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 			battle_saddle.setLocation(atrium2.getDBRef());
 			atrium2.addItem(battle_saddle);
 
-			// laser_rifle.setLocation(battle_saddle.getDBRef());
-			// laser_rifle1.setLocation(battle_saddle.getDBRef());
-			// battle_saddle.setProperty("gun1", laser_rifle.getDBRef());
-			// battle_saddle.setProperty("gun2", laser_rifle1.getDBRef());
-
 			Weapon wing_blades = (Weapon) createItem("mud.foe.wing_blades", false);
 
 			initCreatedItem(wing_blades);
@@ -2447,10 +2437,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 			bank.addAcount(0, acct);
 		}
 
-		/* Item/Creature/Quest Testing -- NOT DB Safe (expects a room to exist, etc) */
-
-		// if( mainDB.endsWith("db.txt") ) { -- this is the right one but it
-		// triggers a mess with a brand new db file (called db.txt) that doesn't contain the expected data
 		if ( moduleLoaded("DND35") && world.equals("forgotten_realms") && ( DB_FILE.endsWith("db.txt") || DB_FILE.endsWith("new.txt") ) ) {
 			/*
 			 * // Arrow Testing -- Not DB Safe Arrow a = new Arrow();
