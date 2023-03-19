@@ -1454,8 +1454,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		
 		/* Server Initialization (network level) */
 
-		// TODO convert printlns to debug calls
-		
 		// TODO it'd be good to caught server launch failures in here, maybe?
 		this.s = new Server(this, port);
 		
@@ -1798,8 +1796,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 			
 			// need to use some scratch space to retain data to copyover so I can reinstantiate the server
 
-			//restart?
-			// MUDServer.main(new String[] {"--port=4202", "--debug"} );
 		}
 	}
 	

@@ -2,6 +2,7 @@ package mud.modules;
 
 
 import java.util.Hashtable;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -57,6 +58,18 @@ public class Spellbound extends GameModule {
 
     @Override
     public void init(final String dataDir) {
+        factions = new LinkedList<Faction>() {{
+            add( new Faction("Thieves Guild") );
+            add( new Faction("Enchanters Circle") );
+            add( new Faction("Illusionist Circle") );
+            add( new Faction("Transmutation Circle") );
+            add( new Faction("Divination Circle") );
+            add( new Faction("Abjuration Circle") );
+            add( new Faction("Evocation Circle") );
+            add( new Faction("Conjuration Circle") );
+            add( new Faction("Assassins Guild") );
+        }};
+        // load areas here
     }
 
     @Override
@@ -118,12 +131,14 @@ public class Spellbound extends GameModule {
                 Virtues.HUMILITY.toString(), Vices.PRIDE.toString(), new Integer(0)));
         player.addMana(new Mana(Colors.VIOLET.toString(),
                 Virtues.FAITH.toString(), Vices.LUST.toString(), new Integer(0)));
+
+        // set initial faction reputations
+        for(final Faction faction : getFactions()) player.setReputation(faction, 0);
     }
 
     @Override
     public List<Faction> getFactions() {
-        // TODO Auto-generated method stub
-        return null;
+        return this.factions;
     }
 
     @Override
