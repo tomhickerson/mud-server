@@ -40,6 +40,9 @@ public class Exit extends MUDObject
 
 	protected Integer origin = 0;      // strictly for doors?
 	protected Integer destination = 0; //
+	protected String originFlag = "";
+	protected String destinationFlag = "";
+	// for xml-ization, but keep the ints for db-ization
 	
 	protected Point p;                 // the spot in the destination room where you arrive
 	
@@ -75,6 +78,21 @@ public class Exit extends MUDObject
 		
 		this.destination = destination;                // Set the destination
 		
+		// set messages to clear
+		this.succMsg = "";  // Success Message
+		this.osuccMsg = ""; // OSuccess Message
+		this.failMsg = "";  // Failure Message
+		this.ofailMsg = ""; // OFailure Message
+	}
+
+	public Exit(String name, String locationFlag, String destinationFlag) {
+		super(-1);
+		this.name = name;
+		this.originFlag = locationFlag;
+		this.destinationFlag = destinationFlag;
+		this.desc = "You see nothing.";                // Set the description to the default
+		this.type = TypeFlag.EXIT;                     // Set the type
+		this.flags = EnumSet.noneOf(ObjectFlag.class); // Set flags
 		// set messages to clear
 		this.succMsg = "";  // Success Message
 		this.osuccMsg = ""; // OSuccess Message
