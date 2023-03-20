@@ -48,7 +48,7 @@ public class AreaHandler extends DefaultHandler {
             if (areList == null)
                 areList = new ArrayList<>();
         } else if (qName.equalsIgnoreCase("ROOMID")) {
-            // set boolean values for fields, will be used in setting Employee variables
+            // set boolean values for fields, will be used in setting variables
             bId = true;
         } else if (qName.equalsIgnoreCase("RAREA")) {
             bZoneName = true;
@@ -92,12 +92,16 @@ public class AreaHandler extends DefaultHandler {
             // area.setDescription(data.toString());
             bDescription = false;
         } else if (bDirection) {
-            areaExit.setLocation(Integer.parseInt(data.toString()));
+            // areaExit.setLocation(Integer.parseInt(data.toString()));
+            // so you actually need to set the name here
             // areaExit.setDirection(Integer.parseInt(data.toString()));
+            Integer direction = Integer.parseInt(data.toString());
+            areaExit.setName(getExitName(direction));
             bDirection = false;
         } else if (bDestination) {
-            // hmm so we need to pull out the other room as the destination
-            // areaExit.setDestination(data.toString());
+            // so we set the origin and the destination here
+            areaExit.setDestinationFlag(data.toString());
+            areaExit.setOriginFlag(area.getName());
             bDestination = false;
         }
 
@@ -120,6 +124,25 @@ public class AreaHandler extends DefaultHandler {
     @Override
     public void characters(char ch[], int start, int length) throws SAXException {
         data.append(new String(ch, start, length));
+    }
+
+    public String getExitName(Integer dir) {
+        switch (dir) {
+            case 0:
+                return "north";
+            case 1:
+                return "south";
+            case 2:
+                return "east";
+            case 3:
+                return "west";
+            case 4:
+                return "up";
+            case 5:
+                return "down";
+                // add gate, nw, sw, etc later
+        }
+        return "";
     }
 }
 

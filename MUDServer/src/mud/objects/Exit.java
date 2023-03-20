@@ -134,6 +134,22 @@ public class Exit extends MUDObject
 	{
 		return destination;
 	}
+
+	public void setDestinationFlag(String destinationFlag) {
+		this.destinationFlag = destinationFlag;
+	}
+
+	public String getDestinationFlag() {
+		return destinationFlag;
+	}
+
+	public void setOriginFlag(String originFlag) {
+		this.originFlag = originFlag;
+	}
+
+	public String getOriginFlag() {
+		return originFlag;
+	}
 	
 	public void addAlias(final String alias) {
 		this.aliases.add(alias);
