@@ -16,6 +16,8 @@ public class Races {
     public static final Race KOBOLD = new Race(null, "Kobold", 7, false, true, new Integer[] { -4, 2, -2, 0, 0, 0 });
     public static final Race NONE = new Race(null, "None", 8, false, true);
     public static final Race UNKNOWN = new Race(null, "Unknown", 9, false, true);
+    public static final Race GOLEM = new Race(null, "Unknown", 13, false, true);
+    public static final Race GARGOYLE = new Race(null, "Unknown", 14, true, true);
 
     /*
      * Strength

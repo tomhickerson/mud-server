@@ -137,5 +137,10 @@ public class Race {
 		public final Subrace ICE_TROLL = new Subrace(Races.TROLL, "Ice Troll", "");
 		public final Subrace TWO_HEADED_TROLL = new Subrace(Races.TROLL, "Two Headed Troll", "");
 		public final Subrace FOUR_ARMED_TROLL = new Subrace(Races.TROLL, "Four Armed Troll", "");
+
+		public final Subrace FLESH_GOLEM = new Subrace(Races.GOLEM, "Flesh Golem", "");
+		public final Subrace STONE_GOLEM = new Subrace(Races.GOLEM, "Stone Golem", "");
+		public final Subrace CLAY_GOLEM = new Subrace(Races.GOLEM, "Clay Golem", "");
+		public final Subrace IRON_GOLEM = new Subrace(Races.GOLEM, "Iron Golem", "");
 	}
 }
