@@ -140,7 +140,16 @@ public class AreaHandler extends DefaultHandler {
                 return "up";
             case 5:
                 return "down";
-                // add gate, nw, sw, etc later
+            case 6:
+                return "gate";
+            case 7:
+                return "northwest";
+            case 8:
+                return "northeast";
+            case 9:
+                return "southwest";
+            case 10:
+                return "southeast";
         }
         return "";
     }
