@@ -1605,9 +1605,9 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 			String message = Telnet.translate(ba);
 
-			System.out.println("] " + message);
+			debug("] " + message);
 			
-			System.out.println("TELNET Response");
+			debug("TELNET Response");
 			
 			if( message.equals("IAC WILL NAWS") ) {
 				client.NAWS = true;
@@ -1813,7 +1813,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 				cmd(command, client);
 			}
 			else {
-				System.out.println("Insufficient Access Permissions");
+				debug("Insufficient Access Permissions");
 			}
 		}
 		catch (final Exception e) {
@@ -1822,7 +1822,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		}
 
 		if (loginCheck(client)) {
-			System.out.println("Client associated with login");
+			debug("Client associated with login");
 			prompt(client);
 		}
 	}
@@ -2024,7 +2024,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		String[] zones = new String[] { "# Zones" };
 
 		Utils.saveStrings( resolvePath(WORLD_DIR, worldName, "zones.txt"), zones );
-		
 
 		// create topics directory
 		final File temp1 = new File(TOPIC_DIR);

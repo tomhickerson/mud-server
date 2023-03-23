@@ -26,6 +26,7 @@ public class Zone {
 	private List<Room> rooms = new ArrayList<Room>();
 	private Map<Integer, Room> roomsById = new TreeMap<Integer, Room>();
 	private Map<String, Room> roomsByName = new TreeMap<String, Room>();
+	private Map<String, Room> roomsByFlag = new TreeMap<String, Room>();
 
 	public Zone(final String name, final Zone parent) {
 		this.name = name;
