@@ -92,6 +92,7 @@ import mud.quest.*;
 import mud.rulesets.d20.*;
 import mud.utils.*;
 import mud.utils.Message.*;
+import mud.utils.services.AreaParserService;
 import mud.utils.services.CreationService;
 import mud.utils.services.PlayerValidationService;
 import mud.weather.*;
@@ -22599,6 +22600,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		final String[] data = Utils.loadStrings(filename); // file data
 
 		// for each line in the file.
+		AreaParserService apService = new AreaParserService();
 		for (final String str : data) {
 			debug("LINE: " + Utils.padRight(str, ' ', 40) + "(STEP: " + step + ")");
 
@@ -22607,8 +22609,19 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 			}
 			else if (str.charAt(0) == '~') {
 				// find the XML file and read it
-				temp = new Zone(name, parent);
-				temp.setId(id);
+				String fileName = str.substring(1);
+				CharSequence charFileName = new StringBuilder(fileName);
+				CharSequence replFileName = new StringBuilder("zones.txt");
+				String fullFileName = filename.replace(replFileName, charFileName);
+				System.out.println("file name found " + fileName);
+				System.out.println("full file name " + fullFileName);
+				if (fileName.endsWith("xml") || fileName.endsWith("cmare")) {
+					temp = apService.parseXml(fullFileName);
+				} else {
+					temp = new Zone(name, parent);
+					temp.setId(id);
+				}
+
 				zones.put(temp, 0);
 
 				debug("New Zone");
