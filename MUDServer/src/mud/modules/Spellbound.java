@@ -134,6 +134,9 @@ public class Spellbound extends GameModule {
 
         // set initial faction reputations
         for(final Faction faction : getFactions()) player.setReputation(faction, 0);
+
+        // player.setLocation(1);
+        // testing to see where we wind up
     }
 
     @Override
