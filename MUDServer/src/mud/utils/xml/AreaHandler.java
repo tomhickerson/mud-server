@@ -108,6 +108,7 @@ public class AreaHandler extends DefaultHandler {
         if (qName.equalsIgnoreCase("AROOM")) {
             // add Employee object to list
             areList.add(area);
+            areaZone.addRoom(area);
         }
 
         if (qName.equalsIgnoreCase("REXIT")) {
