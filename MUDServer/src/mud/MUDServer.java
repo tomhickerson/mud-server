@@ -1115,7 +1115,8 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		creationService = new CreationService(objectDB, (Hashtable<String, Item>) prototypes);
 
 		// Load everything from databases by flag
-		loader.loadObjects(GameUtils.loadListDatabase(DB_FILE), logger);
+		// loader.loadObjects(GameUtils.loadListDatabase(DB_FILE), logger);
+		// somehow we need to take our rooms from the xml zone and put them in here
 
 		debug("Database Loaded!");
 		debug("");
@@ -16846,14 +16847,22 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 		for (final Exit exit : objectDB.getExits()) {
 			if( exit.getExitType() == ExitType.DOOR ) {
-				final Room room = objectDB.getRoomById(exit.getLocation());
+				Room room = objectDB.getRoomById(exit.getLocation());
+				System.out.println("Found exits");
+				if (room == null) {
+					room = objectDB.getRoomByName(exit.getOriginFlag());
+				}
 
 				if (room != null) {
 					room.addExit(exit);
 					debug("Exit " + Utils.padLeft("" + exit.getDBRef(), ' ', 4) + " added to room " + room.getDBRef() + ". (Door)", 2);
 				}
 
-				final Room room1 = objectDB.getRoomById(exit.getDestination());
+				Room room1 = objectDB.getRoomById(exit.getDestination());
+
+				if (room1 == null) {
+					room1 = objectDB.getRoomByName(exit.getDestinationFlag());
+				}
 
 				if (room1 != null) {
 					room1.addExit(exit);
@@ -17510,6 +17519,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		
 		// TODO is this correct placement for player init
 		/* initialize the player, especially slots */
+		// set the start location here? trying it out
 		if (module != null) module.PCInit(player);
 		else                send("No GameModule configured!", client);
 		
@@ -22617,12 +22627,25 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 				System.out.println("full file name " + fullFileName);
 				if (fileName.endsWith("xml") || fileName.endsWith("cmare")) {
 					temp = apService.parseXml(fullFileName);
+					System.out.println("Found " + temp.getRooms().size() + " rooms in zone " + temp.getName());
+					// adding each room to the object db
+					for (Room r : temp.getRooms()) {
+						r.setDBRef(new Integer(objectDB.peekNextId()));
+						objectDB.add(r);
+						objectDB.addRoom(r);
+						for (Exit exx : r.getExits()) {
+							exx.setDBRef(new Integer(objectDB.peekNextId()));
+							objectDB.add(exx);
+							objectDB.addExit(exx);
+						}
+					}
+					temp.setId(objectDB.peekNextId());
 				} else {
 					temp = new Zone(name, parent);
 					temp.setId(id);
 				}
 
-				zones.put(temp, 0);
+				zones.put(temp, new Integer(temp.getId()));
 
 				debug("New Zone");
 				debug(temp.getId() + " = " + temp.getName());
@@ -22635,8 +22658,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 				step = ID;
 				continue;
-			} 
-			else {
+			} else {
 				switch (step) {
 				case ID:
 					id = Utils.toInt(str, -1);

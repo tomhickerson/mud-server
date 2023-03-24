@@ -28,7 +28,11 @@ public class AreaParserService {
 
             List<Room> areList = handler.getAreaList();
             areaZone = handler.getAreaZone();
-
+            // add rooms here, separately?
+            for (Room r : handler.getAreaList()) {
+                areaZone.addRoom(r);
+            }
+            // add exits, monsters, items separately?
         } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
         }
