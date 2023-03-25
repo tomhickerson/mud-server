@@ -85,7 +85,7 @@ public class Room extends MUDObject implements EventSource, Instance
 	}*/
 	
 	private Exit[] dirMap = new Exit[9]; // dirMap[Direction.NORTH]
-	
+	private String longDescription = "";  // long description used in XML
 	// misc note: parent == location
 
 	/**
@@ -96,6 +96,7 @@ public class Room extends MUDObject implements EventSource, Instance
 		
 		this.name = "room";
 		this.desc = "You see nothing.";
+		this.longDescription = "You are surrounded by inky darkness.";
 		this.flags = EnumSet.of(ObjectFlag.SILENT);
 		this.location = 0;
 		
@@ -134,6 +135,7 @@ public class Room extends MUDObject implements EventSource, Instance
 		this.location = toCopy.getLocation(); // Set the location
 		
 		this.type = TypeFlag.ROOM;
+		this.longDescription = toCopy.getLongDescription();
 		
 		this.exits = new ArrayList<Exit>();
 		
@@ -172,7 +174,7 @@ public class Room extends MUDObject implements EventSource, Instance
 		this.location = tempLocation; // Set the location
 		
 		this.type = TypeFlag.ROOM;
-		
+		// note: long description?
 		this.exits = new ArrayList<Exit>();
 		
 		this.tiles = new char[x * y];
@@ -206,6 +208,14 @@ public class Room extends MUDObject implements EventSource, Instance
 	 */
 	public int getParent() {
 		return this.getLocation();
+	}
+
+	public void setLongDescription(String longDescription) {
+		this.longDescription = longDescription;
+	}
+
+	public String getLongDescription() {
+		return longDescription;
 	}
 
 	/**

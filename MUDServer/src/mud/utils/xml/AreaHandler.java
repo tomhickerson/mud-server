@@ -92,6 +92,7 @@ public class AreaHandler extends DefaultHandler {
             // area.setTitle(data.toString());
             bTitle = false;
         } else if (bDescription) {
+            area.setLongDescription(data.toString());
             // set more detail here
             // area.setDescription(data.toString());
             bDescription = false;
@@ -118,6 +119,7 @@ public class AreaHandler extends DefaultHandler {
         if (qName.equalsIgnoreCase("REXIT")) {
             // exitList.add(areaExit);
             area.addExit(areaExit);
+            // note: avoid duplicates
             exitList.add(areaExit);
         }
 
