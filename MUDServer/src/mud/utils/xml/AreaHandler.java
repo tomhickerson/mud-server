@@ -22,6 +22,10 @@ public class AreaHandler extends DefaultHandler {
         return areList;
     }
 
+    public List<Exit> getExitList() {
+        return exitList;
+    }
+
     public Zone getAreaZone() {
         return areaZone;
     }
@@ -114,6 +118,7 @@ public class AreaHandler extends DefaultHandler {
         if (qName.equalsIgnoreCase("REXIT")) {
             // exitList.add(areaExit);
             area.addExit(areaExit);
+            exitList.add(areaExit);
         }
 
         if (qName.equalsIgnoreCase("ROOMEXITS")) {
