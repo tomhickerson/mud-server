@@ -47,7 +47,7 @@ public final class ObjectDB implements ODBI {
 	// resorting to an ever increasing one with unused numbers
 	private Stack<Integer> unusedDBNs = new Stack<Integer>();
 	private List<Integer> reservedDBNs = new LinkedList<Integer>();
-
+	private boolean debug = false;
 	// Hashtable is used here because it does not permit null values
 	//private Hashtable<Client, LinkedList<Integer>> reservationTable = new Hashtable<Client, LinkedList<Integer>>();
 
@@ -156,18 +156,15 @@ public final class ObjectDB implements ODBI {
 			NullObject no = (NullObject) mobj;
 
 			if( !no.isLocked() ) {
-				System.out.println("dbref isn't in use");
+				debug("dbref isn't in use");
 				this.unusedDBNs.push(unusedId);
+			} else {
+				debug("NullObject is locked");
 			}
-			else {
-				System.out.println("NullObject is locked");
-			}
-		}
-		else if( reservedDBNs.contains(unusedId) ) {
-			System.out.println("That id is reserved!");
-		}
-		else {
-			System.out.println("Something is already using that id!");
+		} else if( reservedDBNs.contains(unusedId) ) {
+			debug("That id is reserved!");
+		} else {
+			debug("Something is already using that id!");
 		}
 
 	}
@@ -187,8 +184,6 @@ public final class ObjectDB implements ODBI {
 	 * @param object
 	 */
 	public void add(final MUDObject object) {
-		//System.out.println("");
-		//System.out.println("ObjectDB " + nextId + ": " + item.getDBRef());
 
 		/* If the object's dbref doesn't match the next id (e.g. there's no
 		 * database entry and the db skips over a number) then insert a NullObject,
@@ -206,11 +201,11 @@ public final class ObjectDB implements ODBI {
 		// if the item dbref doesn't match the next one AND there is no entry for that id...
 
 
-		System.out.println("");
-		System.out.println("ObjectDB " + nextId + ": " + object.getDBRef());
+		debug("");
+		debug("ObjectDB " + nextId + ": " + object.getDBRef());
 
-		System.out.println(object.getDBRef() + ": " + object.getName());
-		System.out.println("");
+		debug(object.getDBRef() + ": " + object.getName());
+		debug("");
 
 		// --
 		if( object.getDBRef() != nextId ) {
@@ -219,9 +214,9 @@ public final class ObjectDB implements ODBI {
 				// TODO the check for a non-null object is a KLUDGE so that we can use add(...) for loading and new stuff.
 				while( object.getDBRef() != nextId && getById(object.getDBRef()) == null) {
 					// TODO fix this code, seriously! it will fill up the database with nullobjects if it hits ONE problem!
-					System.out.println("nextId: " + nextId);
-					System.out.println("dbref:  " + object.getDBRef());
-					System.out.println("");
+					debug("nextId: " + nextId);
+					debug("dbref:  " + object.getDBRef());
+					debug("");
 
 					// create a NullObject AND lock it
 					NullObject no = new NullObject(nextId);
@@ -230,8 +225,8 @@ public final class ObjectDB implements ODBI {
 					// insert NullObject
 					this.objsById.put(no.getDBRef(), no);
 
-					System.out.println("Inserted NullObject!");
-					System.out.println("");
+					debug("Inserted NullObject!");
+					debug("");
 
 					this.nextId++;
 
@@ -250,12 +245,12 @@ public final class ObjectDB implements ODBI {
 		 * but otherwise we should take note of the dbref for re-use
 		 */
 		if(object instanceof NullObject) {
-			System.out.println("Inserted NullObject!");
+			debug("Inserted NullObject!");
 
 			NullObject no = (NullObject) object;
 
 			// if it's just an empty space from a deleted objects we can reuse the id
-			if( no.isLocked() ) System.out.println(">>> Object is Locked <<<");
+			if( no.isLocked() ) debug(">>> Object is Locked <<<");
 			else                addUnused( object.getDBRef() );
 
 			skip = true;
@@ -289,7 +284,7 @@ public final class ObjectDB implements ODBI {
 	// TODO NOTE: do not use addAsNew with NULLObjects?
 	public void addAsNew(final MUDObject object) {
 		if( object instanceof NullObject) {
-			System.out.println("ObjectDB (addAsNew): Error");
+			debug("ObjectDB (addAsNew): Error");
 			return;
 		}
 		
@@ -999,5 +994,15 @@ public final class ObjectDB implements ODBI {
 
 		this.unusedDBNs.clear();
 		this.reservedDBNs.clear();
+	}
+
+	private void debug(final String message) {
+		if( debug ) {
+			System.out.println(message);
+		}
+	}
+
+	public void setDebug(boolean debug) {
+		this.debug = debug;
 	}
 }
