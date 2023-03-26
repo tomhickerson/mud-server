@@ -3219,8 +3219,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		StringBuffer sb = new StringBuffer(80);
 		
 		send("Aliases", client);
-		
-		//send("-------------------------------------------", client);
+
 		send(Utils.padRight("", '-', 80), client);
 		
 		for (final Entry<String, String> e : getAliases().entrySet()) {
@@ -3235,8 +3234,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 			
 			count++;
 		}
-		
-		//send("-------------------------------------------", client);
+
 		send(Utils.padRight("", '-', 80), client);
 	}
 
@@ -9794,13 +9792,13 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 						else if (param.equals("info")) {
 							// #info
 							send(Utils.padRight("", '-', 80), client);
-							// send("----------------------------------------------------", client);
+
 							send("Quest ID#: " + quest.getId(), client);
 							send("Name: " + quest.getName(), client);
 							send("Location: " + quest.getLocation().getName(), client);
 							send("Description: ", client);
 							send(parseDesc(quest.getDescription(), 80), client);
-							// send("----------------------------------------------------", client);
+
 							send(Utils.padRight("", '-', 80), client);
 
 							int i = 0;
@@ -12877,11 +12875,16 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 				if (dbref == orig)      player.setLocation(dest);
 				else if (dbref == dest) player.setLocation(orig);
 				
-				System.out.print("Player location (NEW): " + player.getLocation());
-			}
-			else {
-				player.setLocation( exit.getDestination() );
-				System.out.print("Player location (NEW): " + exit.getDestination()); 
+				System.out.print("Player location (NEW) after a door: " + player.getLocation());
+			} else {
+				int dest = exit.getDestination();
+				if (dest == 0) {
+					dest = objectDB.getRoomByName(exit.getDestinationFlag()).getDBRef();
+					System.out.println("Changed from 0 to " + dest);
+				}
+				player.setLocation(dest);
+				// note: fix destinations
+				System.out.print("Player location (NEW): " + dest);
 			}
 
 			// remove listener from room
@@ -13046,12 +13049,12 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 						}
 					}
 				}
-				// send("-----------------", client);
+
 				// send("Level 1:", client);
 				// send(" dispel", client);
 				// send(" fireball", client);
 				// send(" invisibility", client);
-				// send("-----------------", client);
+
 			}
 			else if (scmd.equals("finalize")) {
 				/*
@@ -14837,7 +14840,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 			// will be a little like examine, just here to show changes
 			send("--- Item Editor " + Utils.padRight("", '-', 80 - 16), client);
-			// send("----------------------------------------------------", client);
 			
 			send("DB Reference #: " + item.getDBRef(), client);
 			send("Name: " + data.getObject("name"), client);
@@ -14848,7 +14850,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 			// TODO show different data depending on item type
 
-			// send("----------------------------------------------------", client);
 			send(Utils.padRight("", '-', 80), client);
 
 		}
@@ -16868,9 +16869,12 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 					room1.addExit(exit);
 					debug("Exit " + Utils.padLeft("" + exit.getDBRef(), ' ', 4) + " added to room " + room1.getDBRef() + ". (Door)", 2);
 				}
-			}
-			else {
-				final Room room = objectDB.getRoomById(exit.getLocation());
+			} else {
+				Room room = objectDB.getRoomById(exit.getLocation());
+
+				if (room == null) {
+					room = objectDB.getRoomByName(exit.getOriginFlag());
+				}
 
 				if (room != null) {
 					room.addExit(exit);
@@ -16878,6 +16882,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 				}
 				
 				// PORTAL
+				// note: fix this later
 				if( exit.getExitType() == ExitType.PORTAL ) {
 					final Portal portal = (Portal) exit;
 					
@@ -21798,8 +21803,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		return quests.get(questId);
 	}
 
-	// --------------------------------------------------------------------------------
-
 	/**
 	 * getProgInt
 	 * 
@@ -21824,8 +21827,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 	public ODBI getDBInterface() {
 		return this.objectDB;
 	}
-
-	// --------------------------------------------------------------------------------
 
 	/**
 	 * Loads an instance of the specified GameModule implementation. (fully
@@ -22633,11 +22634,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 						r.setDBRef(new Integer(objectDB.peekNextId()));
 						objectDB.add(r);
 						objectDB.addRoom(r);
-						for (Exit exx : r.getExits()) {
-							exx.setDBRef(new Integer(objectDB.peekNextId()));
-							objectDB.add(exx);
-							objectDB.addExit(exx);
-						}
 					}
 					temp.setId(objectDB.peekNextId());
 				} else {
