@@ -614,13 +614,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 	public int LIMBO = -2;       // ?
 	*/
 	
-	/*public static final Ore iron = new Ore("Iron");
-	public static final Ore tin = new Ore("Tin");
-	
-	public static final Ore copper = new Ore("Copper");
-	public static final Ore silver = new Ore("Silver");
-	public static final Ore gold = new Ore("Gold");*/
-	
 	// TODO implement new debug controls -- use string keys to decide if that debug data is currently wanted
 	private Set<String> debugKeys = new HashSet<String>();
 	
@@ -969,11 +962,9 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 			if (module.getName().equals("Fallout Equestria")) {
 				rules = mud.rulesets.foe.FOESpecial.getInstance();
 				rs_special = true;
-			}
-			else rules = D20.getInstance();
-		}
-		else rules = D20.getInstance();
-
+			} else rules = D20.getInstance();
+		} else rules = D20.getInstance();
+		// note: looking into changing this?
 		Player.ruleset = rules; // set static Ruleset reference in Player
 		
 		debug(""); // formatting
@@ -1068,7 +1059,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		debug("Loading Zones...");
 		
 		debug("");
-		
+		objectDB.setDebug(this.debug);
 		// TODO be nice to do all these resolutions in one place..
 		// Load Zones (only doing this here, because Rooms may be in a zone, and
 		// so by loading Zones first then rooms can be placed in them by the ObjectLoader
@@ -1887,7 +1878,10 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 							"alias north:n", "alias northeast:ne", "alias northwest:nw",
 							"alias south:s", "alias southeast:se", "alias southwest:sw",
 							"alias east:e", "alias west:w",
-							"alias inventory:inv,i", "alias look:l", "alias pconfig:pconf", "alias quit:QUIT"
+							"alias inventory:inv,i",
+							"alias look:l",
+							"alias up:u", "alias down:d",
+							"alias pconfig:pconf", "alias quit:QUIT"
 					}
 					);
 		}
