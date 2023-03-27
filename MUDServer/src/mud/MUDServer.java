@@ -90,6 +90,7 @@ import mud.objects.things.*;
 import mud.protocols.*;
 import mud.quest.*;
 import mud.rulesets.d20.*;
+import mud.rulesets.spb.SpellboundGGG;
 import mud.utils.*;
 import mud.utils.Message.*;
 import mud.utils.services.AreaParserService;
@@ -962,7 +963,11 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 			if (module.getName().equals("Fallout Equestria")) {
 				rules = mud.rulesets.foe.FOESpecial.getInstance();
 				rs_special = true;
-			} else rules = D20.getInstance();
+			} else if (module.getShortName().equals("GGG")) {
+				rules = SpellboundGGG.getInstance();
+			} else {
+				rules = D20.getInstance();
+			}
 		} else rules = D20.getInstance();
 		// note: looking into changing this?
 		Player.ruleset = rules; // set static Ruleset reference in Player
@@ -12869,16 +12874,16 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 				if (dbref == orig)      player.setLocation(dest);
 				else if (dbref == dest) player.setLocation(orig);
 				
-				System.out.print("Player location (NEW) after a door: " + player.getLocation());
+				debug("Player location (NEW) after a door: " + player.getLocation());
 			} else {
 				int dest = exit.getDestination();
 				if (dest == 0) {
 					dest = objectDB.getRoomByName(exit.getDestinationFlag()).getDBRef();
-					System.out.println("Changed from 0 to " + dest);
+					debug("Changed from 0 to " + dest);
 				}
 				player.setLocation(dest);
-				// note: fix destinations
-				System.out.print("Player location (NEW): " + dest);
+
+				debug("Player location (NEW): " + dest);
 			}
 
 			// remove listener from room
@@ -16876,7 +16881,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 				}
 				
 				// PORTAL
-				// note: fix this later
+				// tnote: fix this later
 				if( exit.getExitType() == ExitType.PORTAL ) {
 					final Portal portal = (Portal) exit;
 					

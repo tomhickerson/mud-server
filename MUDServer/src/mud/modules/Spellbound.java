@@ -32,7 +32,6 @@ public class Spellbound extends GameModule {
 
     @Override
     public String getShortName() {
-        //return this.name;
         return "GGG";
     }
 
@@ -61,13 +60,14 @@ public class Spellbound extends GameModule {
         factions = new LinkedList<Faction>() {{
             add( new Faction("Thieves Guild") );
             add( new Faction("Enchanters Circle") );
-            add( new Faction("Illusionist Circle") );
+            add( new Faction("Illusionists Circle") );
             add( new Faction("Transmutation Circle") );
             add( new Faction("Divination Circle") );
             add( new Faction("Abjuration Circle") );
             add( new Faction("Evocation Circle") );
             add( new Faction("Conjuration Circle") );
             add( new Faction("Assassins Guild") );
+            add( new Faction("Necromancers Circle") );
         }};
         // load areas here
     }
@@ -135,8 +135,6 @@ public class Spellbound extends GameModule {
         // set initial faction reputations
         for(final Faction faction : getFactions()) player.setReputation(faction, 0);
 
-        // player.setLocation(1);
-        // testing to see where we wind up
     }
 
     @Override

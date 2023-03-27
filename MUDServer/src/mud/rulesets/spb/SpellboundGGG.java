@@ -8,7 +8,7 @@ import mud.interfaces.Ruleset;
 public final class SpellboundGGG implements Ruleset {
     @Override
     public String getName() {
-        return null;
+        return "SpellboundGGG";
     }
 
     @Override
