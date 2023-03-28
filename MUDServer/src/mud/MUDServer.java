@@ -274,7 +274,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 	private String MOTD_FILE = resolvePath(MOTD_DIR,        "motd.txt");                // motd.txt -- message of the day/intro screen
 	private String THEME_FILE = resolvePath(THEME_DIR,      "default.thm");             // theme file to load
 
-	// ???
 	private Integer start_room = 9; // default starting room
 
 	// Primary Objects
@@ -16997,17 +16996,30 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 				final String var = parts[0];
 				final String val = parts[1];
-				
-				// TODO debug or not?
-				//System.out.println("" + var + ": \'" + val + "\'");
+
+				debug("" + var + ": \'" + val + "\'");
 
 				if (section.equals("theme")) {
 					// TODO should db be a variable in Theme?
 					// TODO more nasty path kludge... conflict between file/dir names and needing the full path..
 					if(var.equals("name") )            ;
 					else if (var.equals("mud_name"))   mud_name = val;
+					// tnote: allow multiple MOTDs
 					else if (var.equals("motd_file"))  motd_file = val;
-					else if (var.equals("start_room")) start_room = Utils.toInt(val, 0);
+					// tnote: fix the start room
+					else if (var.equals("start_room")) {
+						try {
+							// test to see if its an int
+							start_room = Utils.toInt(val, 0);
+						} catch (Exception numformatexc) {
+							Room startRoom = objectDB.getRoomByName(val);
+							if (startRoom != null) {
+								// otherwise, fill in with the room's name
+								start_room = startRoom.getDBRef();
+							}
+						}
+						// otherwise, leave as default
+					}
 					else if (var.equals("module"))     ;
 					else if (var.equals("world"))      world = val;
 					//else if (var.equals("db"))         this.DB_FILE = DATA_DIR + "databases\\" + val;
@@ -17015,8 +17027,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 					else {
 						debug("Theme Loader (" + section + "): unknown var \'" + var + "\' with value of \'" + val + "\'.");
 					}
-				}
-				else if (section.equals("calendar")) {
+				} else if (section.equals("calendar")) {
 					// NOTE: could I set the day/month/year on time loop in here?
 					debug(line);
 					if (var.equals("day"))         day = Utils.toInt(val, 0);
@@ -17027,22 +17038,12 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 					else {
 						debug("Theme Loader (" + section + "): unknown var \'" + var + "\' with value of \'" + val + "\'.");
 					}
-				}
-				else if (section.equals("months")) {
+				} else if (section.equals("months")) {
 					final int monthIndex = Utils.toInt(var, -1) - 1;
 					MONTH_NAMES[monthIndex] = val;
 					debug("Month " + Utils.padRight("" + monthIndex, ' ', 2) + " set to \"" + val + "\"");
-				}
-				else if (section.equals("months_alt")) {
-				}
-				else if (section.equals("holidays")) {
-					/*final String[] dateInfo = var.split(",");
-
-					final int m = Utils.toInt(dateInfo[0], 0);
-					final int d = Utils.toInt(dateInfo[1], 0);
-
-					debug(Utils.padRight(MONTH_NAMES[m], ' ', 8) + " " + Utils.padRight(d, ' ', 2) + " "   , 2);*/
-
+				} else if (section.equals("months_alt")) {
+				} else if (section.equals("holidays")) {
 					// day, month = holiday name/day name
 					// E.g.: 9,21 = Autumn Equinox
 
@@ -17258,9 +17259,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 	 * @return String - the message of the day
 	 */
 	public String messageOfTheDay() {
-		// TODO even MORE path kludges
-		//return new String( Utils.loadBytes(WORLD_DIR + world + "\\motd\\" + motd_file) );
-		//byte[] temp = Utils.loadBytes(WORLD_DIR + world + "\\motd\\" + motd_file);
+		// tnote: make several MOTDs to be shown randomly
 		byte[] temp = Utils.loadBytes( resolvePath(WORLD_DIR, world, "motd", motd_file) );
 		
 		String motd;

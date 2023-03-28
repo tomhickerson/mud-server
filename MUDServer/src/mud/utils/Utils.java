@@ -292,27 +292,6 @@ public final class Utils {
 		return result;
 	}
 
-	// old
-	/*public static int[] stringsToInts(String[] in) {
-		int[] result = new int[in.length];
-
-		int index = 0;
-
-		for(String string : in) {
-			try {
-				result[index] = Integer.parseInt(string);
-				index++;
-			}
-			catch(NumberFormatException nfe) {
-				System.out.println("--- Stack Trace ---");
-				nfe.printStackTrace();
-				System.out.println("Cannot parse element");
-			}
-		}
-
-		return result;
-	}*/
-
 	public static String padRight(String s, int n) {
 		if( n > 0 ) return String.format("%1$-" + n + 's', s);
 		else        return "";
@@ -512,48 +491,6 @@ public final class Utils {
 
 		return roll(num, sides) + bonus;
 	}
-
-	// old roll
-	/*public static int roll(String dice) { // roll(3d4+1)
-		int number = 0;
-		int sides = 0;
-		int modifier = 0;
-
-		int roll = 0;
-		int result = 0;
-
-		// 3d4 = 3 d 4
-		// 3d4+1 = 3 d 4 + 1
-		try {
-
-			number = Integer.parseInt(dice.substring(0, dice.indexOf("d")));
-
-			if(dice.indexOf("+") == -1) {
-				sides = Integer.parseInt(dice.substring(dice.indexOf("d") + 1, dice.length()));
-			}
-			else {
-				sides = Integer.parseInt(dice.substring(dice.indexOf("d") + 1, dice.indexOf("+")));
-				modifier = Integer.parseInt(dice.substring(dice.indexOf("+") + 1, dice.length()));
-			}
-
-			System.out.println(number);
-			System.out.println(sides);
-			System.out.println(modifier);
-			System.out.println("" + number + "d" + sides + "+" + modifier);
-
-			System.out.println("Rolling " + number + "d" + sides);
-
-			roll = roll(number, sides);
-			System.out.println("roll: " + roll);
-
-			result = roll + modifier;
-			System.out.println("result: " + result);
-		}
-		catch(NumberFormatException nfe) {
-		}
-
-		return result;
-	}*/
 
 	/**
 	 * A safe way to parse an integer elsewhere in the code. A default 
