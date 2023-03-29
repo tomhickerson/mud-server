@@ -161,6 +161,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 	/* NOTE: "Theme" related */
 	private String mud_name;
 	private String motd_file;
+	private String[] motdFiles;
 	private String world;
 
 	// program information
@@ -17005,7 +17006,14 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 					if(var.equals("name") )            ;
 					else if (var.equals("mud_name"))   mud_name = val;
 					// tnote: allow multiple MOTDs
-					else if (var.equals("motd_file"))  motd_file = val;
+					else if (var.equals("motd_file"))  {
+						motd_file = val;
+
+						if (motd_file.contains(",")) {
+							// split the file names and put them in an array
+							motdFiles = motd_file.split(",");
+						}
+					}
 					// tnote: fix the start room
 					else if (var.equals("start_room")) {
 						try {
@@ -17259,9 +17267,15 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 	 * @return String - the message of the day
 	 */
 	public String messageOfTheDay() {
+		byte[] temp;
 		// tnote: make several MOTDs to be shown randomly
-		byte[] temp = Utils.loadBytes( resolvePath(WORLD_DIR, world, "motd", motd_file) );
-		
+		if (motdFiles != null && motdFiles.length >= 1) {
+			int howMany = motdFiles.length;
+			int showMe = Utils.roll(1, howMany);
+			temp = Utils.loadBytes(resolvePath(WORLD_DIR, world, "motd", motdFiles[showMe - 1]));
+		} else {
+			temp = Utils.loadBytes(resolvePath(WORLD_DIR, world, "motd", motd_file));
+		}
 		String motd;
 		
 		if( temp.length > 0 ) motd = new String( temp );
