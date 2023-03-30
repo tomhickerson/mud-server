@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mud.misc.Zone;
+import mud.objects.Creature;
 import mud.objects.Exit;
 import mud.objects.Room;
 import org.xml.sax.Attributes;
@@ -13,10 +14,12 @@ import org.xml.sax.helpers.DefaultHandler;
 public class AreaHandler extends DefaultHandler {
     private List<Room> areList = null;
     private List<Exit> exitList = null;
+    private List<Creature> mobList = null;
     private Room area = null;
     private Exit areaExit = null;
     private Zone areaZone = null;
     private StringBuilder data = null;
+    private Creature mob = null;
 
     public List<Room> getAreaList() {
         return areList;
@@ -25,6 +28,8 @@ public class AreaHandler extends DefaultHandler {
     public List<Exit> getExitList() {
         return exitList;
     }
+
+    public List<Creature> getMobList() { return mobList; }
 
     public Zone getAreaZone() {
         return areaZone;
@@ -35,6 +40,7 @@ public class AreaHandler extends DefaultHandler {
     boolean bTitle = false;
     boolean bDescription = false;
     boolean inExits = false;
+    boolean inMobs = false;
     boolean bDirection = false;
     boolean bDestination = false;
 
@@ -65,6 +71,10 @@ public class AreaHandler extends DefaultHandler {
 
             exitList = new ArrayList<>();
             inExits = true;
+        } else if (qName.equalsIgnoreCase("ROOMMOBS")) {
+            // initiate list of monsters
+            inMobs = true;
+            mobList = new ArrayList<>();
         } else if (qName.equalsIgnoreCase("REXIT")) {
             areaExit = new Exit();
         } else if (qName.equalsIgnoreCase("XDIRE")) {
@@ -126,6 +136,10 @@ public class AreaHandler extends DefaultHandler {
         if (qName.equalsIgnoreCase("ROOMEXITS")) {
             area.setExits(exitList);
             inExits = false;
+        }
+
+        if (qName.equalsIgnoreCase("ROOMMOBS")) {
+            inMobs = false;
         }
     }
 
