@@ -42,6 +42,7 @@ public class Creature extends MUDObject implements Mobile {
 	protected boolean ridable = false; // can this creature be ridden (default: false)
 	
 	public int hp = 10;
+	private int level = 0;
 	public int maxhp = 10;
 	
 	// movement
@@ -122,6 +123,12 @@ public class Creature extends MUDObject implements Mobile {
 	public int getMaxHP() {
 		return this.maxhp;
 	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
+	public int getLevel() { return this.level; }
 	
 	public boolean isMoving() {
 		return this.moving;

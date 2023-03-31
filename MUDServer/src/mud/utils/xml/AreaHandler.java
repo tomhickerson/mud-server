@@ -75,6 +75,8 @@ public class AreaHandler extends DefaultHandler {
             // initiate list of monsters
             inMobs = true;
             mobList = new ArrayList<>();
+        } else if (qName.equalsIgnoreCase("RMOB")) {
+            mob = new Creature();
         } else if (qName.equalsIgnoreCase("REXIT")) {
             areaExit = new Exit();
         } else if (qName.equalsIgnoreCase("XDIRE")) {
@@ -140,6 +142,14 @@ public class AreaHandler extends DefaultHandler {
 
         if (qName.equalsIgnoreCase("ROOMMOBS")) {
             inMobs = false;
+        }
+
+        if (qName.equalsIgnoreCase("RMOB")) {
+            mobList.add(mob);
+        }
+
+        if (qName.equalsIgnoreCase("MLEVL")) {
+            mob.setLevel(Integer.parseInt(data.toString()));
         }
     }
 
