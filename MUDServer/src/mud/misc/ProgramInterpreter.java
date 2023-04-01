@@ -225,7 +225,6 @@ public final class ProgramInterpreter {
 		// TODO fix kludge?
 		// what should cmd, arg, how be set to?
 		addVar("cmd", "");
-		//addVar("arg", ""); // note this got changed because it broke an external call of {dbref:{&arg}} by overwriting the var
 		addVar("how", "");
 		addVar("player", "" + player.getDBRef());
 		addVar("this", "" + (object != null ? object.getDBRef() : -1));

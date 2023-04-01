@@ -6208,14 +6208,9 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 				else {
 					send("You take a sip of your " + colors(item.getName(), getDisplayColor("item")) + ".", client);
 				}
-
-				// Script s = item.getScript(TriggerType.onUse);
-
-				// if( s != null ) {
 				final String result = pgm.interpret(item.getScript(TriggerType.onUse), player, item);
 
 				if (!result.equals("")) send(result, client);
-				// }
 
 				player.getInventory().remove(item); // remove from inventory
 				objectDB.remove(item);              // remove from database
@@ -23467,12 +23462,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 		return success;
 	}
-	
-	// NOTE: is the following redundant to the immediate part above?
-	/*
-	public ScriptedCommand createScriptedCommand(final String name, final Script script) {
-		return new ScriptedCommand(name, this.pgm, script);
-	}*/
 
 	/**
 	 * check idle state and increase idle time count if the player is still idle
@@ -23489,20 +23478,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 				player.setIdleTime(0);
 			}
 		}
-		
-		// should not decide that you are idle here, since one loop without input = idle
-		// by that measure
-		/*if (input == null) {
-			if (!isIdle) {
-				player.setIdle(true);
-			}
-		}
-		else {
-			if (isIdle) {
-				player.setIdle(false);
-				player.idle = 0;
-			}
-		}*/
 	}
 	
 	protected void addAlias(final String command, final String alias) {
