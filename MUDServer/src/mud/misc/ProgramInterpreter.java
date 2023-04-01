@@ -15,6 +15,7 @@ import mud.objects.Player;
 import mud.utils.Message;
 import mud.utils.Point;
 import mud.utils.Utils;
+import mud.utils.services.CreationService;
 
 /*
  * Copyright (c) 2012 Jeremy N. Harton
@@ -266,7 +267,8 @@ public final class ProgramInterpreter {
 
 				if(functionName.equals("create_item")) {
 					// {create_item:identifier}
-					final Item item = parent.createItem(params[0], true);
+					CreationService creationService = new CreationService(parent.getDBInterface());
+					final Item item = creationService.createItem(params[0], true);
 
 					if( item != null ) return "" + item.getDBRef();
 					else               return "" + -1;

@@ -3,6 +3,7 @@ package mud.utils.services;
 import mud.Constants;
 import mud.ObjectDB;
 import mud.ObjectFlag;
+import mud.interfaces.ODBI;
 import mud.objects.Creature;
 import mud.objects.Item;
 import mud.objects.items.Armor;
@@ -20,6 +21,10 @@ public class CreationService {
         this.prototypes = new Hashtable<String, Item>();
         // instantiation of class
         // do we have to return object db?
+    }
+
+    public CreationService(ODBI oDB) {
+        this.objectDB = (ObjectDB) oDB;
     }
 
     public CreationService(ObjectDB objectDB, Hashtable<String, Item> prototypes) {
