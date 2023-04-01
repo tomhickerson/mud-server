@@ -2143,11 +2143,11 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 			// initialize a loot table for a creature
 			// hand it concrete, but unitialized items pulled from prototypes
 			lootTables.put( "mangy rat", Utils.mkList(
-					createItem("mud.iron_dagger", false),
-					createItem("mud.iron_dagger", false),
-					createItem("mud.iron_dagger", false),
-					createItem("mud.iron_dagger", false),
-					createItem("mud.iron_dagger", false)
+					creationService.createItem("mud.iron_dagger", false),
+					creationService.createItem("mud.iron_dagger", false),
+					creationService.createItem("mud.iron_dagger", false),
+					creationService.createItem("mud.iron_dagger", false),
+					creationService.createItem("mud.iron_dagger", false)
 					));
 		}
 	}
@@ -5142,7 +5142,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 						materials.clear();
 
-						final Item item = createItem("mud." + arg.replace(" ", "_"), true);
+						final Item item = creationService.createItem("mud." + arg.replace(" ", "_"), true);
 
 						if( item != null ) {
 							// TODO need to not destroy input material in case of code bugs?
@@ -5231,7 +5231,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 				// give them starting equipment?
 				
 				//
-				final Item helpNote = createItem("Note", "Read this note for help with 'read'.", player.getDBRef());
+				final Item helpNote = creationService.createItem("Note", "Read this note for help with 'read'.", player.getDBRef());
 
 				helpNote.setProperty("_game/readable", true);
 				helpNote.setProperty("_game/text","Welcome.\nTo get started you should read the help/lore files and then go through character generation.");
@@ -14083,7 +14083,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 			if ( prototypes.containsKey(rarg) ) {
 				// create item but don't initialize it yet
-				final Item item = createItem(rarg, false);
+				final Item item = creationService.createItem(rarg, false);
 
 				item.setLocation( room.getDBRef() );
 
@@ -20355,133 +20355,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 	/* Creation Functions */
 
-	/**
-	 * create a new basic, untyped Item for us to modify and work on
-	 * 
-	 * @return
-	 */
-	private Item createItem() {
-		final Item item = new Item(-1);
-
-		item.setName("");
-		item.setFlags(EnumSet.noneOf(ObjectFlag.class));
-		item.setDesc("");
-		item.setLocation(-1);
-
-		// TODO remember to make the created items get passed through init
-		// objectDB.addAsNew(item);
-		// objectDB.addItem(item);
-
-		return item;
-	}
-
-	public Item createItem(String name, String description, int location) {
-		final Item item = new Item(-1);
-
-		item.setName(name);
-		item.setFlags(EnumSet.noneOf(ObjectFlag.class));
-		item.setDesc(description);
-		item.setLocation(location);
-
-		return item;
-	}
-	
-	/**
-	 * Create an Item based on an existing prototype, identified by a string.
-	 * 
-	 * @param prototype
-	 * @return
-	 */
-	public Item createItem(final String prototype) {
-		return createItem(prototype, true);
-	}
-	
-	/**
-	 * Create an Item based on an existing prototype, identified by a string.
-	 * 
-	 * @param prototype id of an existing prototype
-	 * @param init      should we initialize this item (add to database)
-	 * @return
-	 */
-	public Item createItem(final String prototype, final boolean init) {
-		final Item template = prototypes.get(prototype);
-		
-		if (template != null) {
-			final Item newItem = template.getCopy();
-
-			if (init) {
-				objectDB.addAsNew(newItem);
-				objectDB.addItem(newItem);
-			}
-
-			return newItem;
-		}
-		else {
-			debug("ERROR: null template?!");
-		}
-
-		return null;
-	}
-
-	/**
-	 * Create a new item using an existing item as a template. More or less a
-	 * means to copy an object.
-	 * 
-	 * NOTE: internal use only
-	 * 
-	 * @param template the item to base the new one on
-	 * @return         the new item we just created
-	 */
-
-	/**
-	 * Create new items using an existing item as a template. More or less a
-	 * means to make multiple copies of an item
-	 * 
-	 * <br />
-	 * <br />
-	 * 
-	 * <b>NOTE:</b> internal use only
-	 * 
-	 * @param template the item to base the new ones on
-	 * @param numItems how many new items to make.
-	 * @return         the new items we just created
-	 */
-	private ArrayList<Item> createItems(final Weapon template, final Integer numItems) {
-		ArrayList<Item> items = new ArrayList<Item>(numItems);
-
-		for (int i = 0; i < numItems; i++) {
-			final Weapon item = template.getCopy();
-			items.add(item);
-			initCreatedItem(item);
-		}
-
-		return items;
-	}
-
-	private ArrayList<Item> createItems(final Book template, final Integer numItems) {
-		final ArrayList<Item> items = new ArrayList<Item>(numItems);
-
-		for (int i = 0; i < numItems; i++) {
-			final Book book = template.getCopy();
-			items.add(book);
-			initCreatedItem(book);
-		}
-
-		return items;
-	}
-
-	private ArrayList<Item> createItems(final Armor template, final Integer numItems) {
-		final ArrayList<Item> items = new ArrayList<Item>(numItems);
-
-		for (int i = 0; i < numItems; i++) {
-			final Armor armor = template.getCopy();
-			items.add(armor);
-			initCreatedItem(armor);
-		}
-
-		return items;
-	}
-
 	// TODO need to deal with the ambiguity of stat values...
 	public NPC createNPC(final String name, final Room location) {
 		return createNPC(name, null, new Integer[] { 0, 0, 0, 0, 0, 0 }, location);
@@ -24582,7 +24455,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 	}
 	
 	public Item getResource() {
-		Item ore = createItem(
+		Item ore = creationService.createItem(
 				"Iron Ore",
 				"A chunk of iron ore. Bands of reddish brown are intertwined with darker gray spots.",
 				-1
