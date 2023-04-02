@@ -68,6 +68,9 @@ public class Spellbound extends GameModule {
             add( new Faction("Conjuration Circle") );
             add( new Faction("Assassins Guild") );
             add( new Faction("Necromancers Circle") );
+            add( new Faction("Cults of Nimh") );
+            add( new Faction("Seven Tribes of Trolls") );
+            add( new Faction("Seven Houses of Elves") );
         }};
         // load areas here
     }
