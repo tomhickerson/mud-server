@@ -41,6 +41,7 @@ public class AreaHandler extends DefaultHandler {
     boolean bDescription = false;
     boolean inExits = false;
     boolean inMobs = false;
+    boolean inMobText = false;
     boolean bDirection = false;
     boolean bDestination = false;
 
@@ -83,6 +84,8 @@ public class AreaHandler extends DefaultHandler {
             bDirection = true;
         } else if (qName.equalsIgnoreCase("XDOOR")) {
             bDestination = true;
+        } else if (qName.equalsIgnoreCase("MTEXT")) {
+            inMobText = true;
         }
         // create the data container
         data = new StringBuilder();
@@ -141,6 +144,7 @@ public class AreaHandler extends DefaultHandler {
         }
 
         if (qName.equalsIgnoreCase("ROOMMOBS")) {
+            mob.setTextLocation(area.getName());
             inMobs = false;
         }
 
@@ -150,6 +154,18 @@ public class AreaHandler extends DefaultHandler {
 
         if (qName.equalsIgnoreCase("MLEVL")) {
             mob.setLevel(Integer.parseInt(data.toString()));
+        }
+
+        if (qName.equalsIgnoreCase("MTEXT")) {
+            inMobText = false;
+        }
+
+        if (inMobs && inMobText && qName.equalsIgnoreCase("NAME")) {
+            mob.setName(data.toString());
+        }
+
+        if (inMobs && inMobText && qName.equalsIgnoreCase("DESC")) {
+            mob.setDesc(data.toString());
         }
     }
 
