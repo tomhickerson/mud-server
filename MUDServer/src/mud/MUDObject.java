@@ -44,7 +44,7 @@ public abstract class MUDObject {
 	protected String desc;               // object description
 	protected EnumSet<ObjectFlag> flags; // object flags
 	protected Integer location;          // object location
-	
+	protected String textLocation;		 // room name location
 	protected TypeFlag type;             // object type
 	
 	protected Player owner;              // who owns the object (dbref of owner? only player can own?)
@@ -299,6 +299,14 @@ public abstract class MUDObject {
 	 */
 	public final void setLocation(final Integer newLocation) {
 		this.location = newLocation;
+	}
+
+	public String getTextLocation() {
+		return this.textLocation;
+	}
+
+	public void setTextLocation(String text) {
+		this.textLocation = text;
 	}
 
 	/**
