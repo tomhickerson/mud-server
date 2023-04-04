@@ -44,6 +44,7 @@ public class AreaHandler extends DefaultHandler {
     boolean inMobText = false;
     boolean bDirection = false;
     boolean bDestination = false;
+    boolean bInven = false;
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
@@ -86,6 +87,8 @@ public class AreaHandler extends DefaultHandler {
             bDestination = true;
         } else if (qName.equalsIgnoreCase("MTEXT")) {
             inMobText = true;
+        } else if (qName.equalsIgnoreCase("INVEN")) {
+            bInven = true;
         }
         // create the data container
         data = new StringBuilder();
@@ -166,6 +169,18 @@ public class AreaHandler extends DefaultHandler {
 
         if (inMobs && inMobText && qName.equalsIgnoreCase("DESC")) {
             mob.setDesc(data.toString());
+        }
+
+        if (inMobs && inMobText && qName.equalsIgnoreCase("DISP")) {
+            mob.setDisplay(data.toString());
+        }
+
+        if (inMobText && inMobs && qName.equalsIgnoreCase("MONEY")) {
+            mob.setProperty("gold", data.toString());
+        }
+
+        if (inMobs && inMobText && qName.equalsIgnoreCase("INVEN")) {
+            bInven = false;
         }
     }
 

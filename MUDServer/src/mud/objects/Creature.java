@@ -53,6 +53,7 @@ public class Creature extends MUDObject implements Mobile {
 	public boolean isHostile = false;
 	
 	private Strategy strategy;
+	private String display;
 	
 	public Creature() {
 		this("creature", "some non-descript creature");
@@ -144,6 +145,12 @@ public class Creature extends MUDObject implements Mobile {
 
 	public void setDestination(Point newDest) {
 		this.destination = newDest;
+	}
+
+	public String getDisplay() { return this.display; }
+
+	public void setDisplay(String newdisplay) {
+		this.display = newdisplay;
 	}
 	
 	public void changePosition(int cX, int cY, int cZ) {
