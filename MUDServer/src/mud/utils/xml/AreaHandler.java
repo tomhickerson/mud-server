@@ -7,6 +7,7 @@ import mud.misc.Zone;
 import mud.objects.Creature;
 import mud.objects.Exit;
 import mud.objects.Room;
+import mud.objects.Thing;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -20,6 +21,7 @@ public class AreaHandler extends DefaultHandler {
     private Zone areaZone = null;
     private StringBuilder data = null;
     private Creature mob = null;
+    private Thing item = null;
 
     public List<Room> getAreaList() {
         return areList;
@@ -45,6 +47,7 @@ public class AreaHandler extends DefaultHandler {
     boolean bDirection = false;
     boolean bDestination = false;
     boolean bInven = false;
+    boolean bItem = false;
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
@@ -89,6 +92,9 @@ public class AreaHandler extends DefaultHandler {
             inMobText = true;
         } else if (qName.equalsIgnoreCase("INVEN")) {
             bInven = true;
+        } else if (qName.equalsIgnoreCase("ITEM")) {
+            bItem = true;
+            item = new Thing("");
         }
         // create the data container
         data = new StringBuilder();
@@ -181,6 +187,12 @@ public class AreaHandler extends DefaultHandler {
 
         if (inMobs && inMobText && qName.equalsIgnoreCase("INVEN")) {
             bInven = false;
+        }
+
+        if (bInven && qName.equalsIgnoreCase("ITEM")) {
+            mob.addItem(item);
+            //make sure to add name and desc first
+            bItem = false;
         }
     }
 

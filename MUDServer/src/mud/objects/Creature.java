@@ -11,7 +11,9 @@ import mud.rulesets.d20.Races;
 import mud.utils.Point;
 import mud.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 
 /*
  * Copyright (c) 2012 Jeremy N. Harton
@@ -54,6 +56,7 @@ public class Creature extends MUDObject implements Mobile {
 	
 	private Strategy strategy;
 	private String display;
+	List<Thing> inventory = new ArrayList<Thing>();
 	
 	public Creature() {
 		this("creature", "some non-descript creature");
@@ -119,6 +122,16 @@ public class Creature extends MUDObject implements Mobile {
 	public void setMaxHP(int newMaxHP) {
 		this.maxhp = newMaxHP;
 		this.hp = maxhp;
+	}
+
+	public List<Thing> getInventory() { return inventory; }
+
+	public void addItem(Thing item) {
+		inventory.add(item);
+	}
+
+	public void setInventory(ArrayList<Thing> items) {
+		this.inventory = items;
 	}
 	
 	public int getMaxHP() {
