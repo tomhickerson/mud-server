@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mud.misc.Zone;
-import mud.objects.Creature;
-import mud.objects.Exit;
-import mud.objects.Room;
-import mud.objects.Thing;
+import mud.objects.*;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -21,7 +18,8 @@ public class AreaHandler extends DefaultHandler {
     private Zone areaZone = null;
     private StringBuilder data = null;
     private Creature mob = null;
-    private Thing item = null;
+    private Thing thing = null;
+    private Item item = null;
 
     public List<Room> getAreaList() {
         return areList;
@@ -48,6 +46,7 @@ public class AreaHandler extends DefaultHandler {
     boolean bDestination = false;
     boolean bInven = false;
     boolean bItem = false;
+    boolean bItemData = false;
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
@@ -94,7 +93,9 @@ public class AreaHandler extends DefaultHandler {
             bInven = true;
         } else if (qName.equalsIgnoreCase("ITEM")) {
             bItem = true;
-            item = new Thing("");
+            item = new Item("", "");
+        } else if (qName.equalsIgnoreCase("IDATA")) {
+            bItemData = true;
         }
         // create the data container
         data = new StringBuilder();
@@ -194,6 +195,23 @@ public class AreaHandler extends DefaultHandler {
             //make sure to add name and desc first
             bItem = false;
         }
+
+        if (bInven && qName.equalsIgnoreCase("ICLASS")) {
+            item.setItemType(getItemType(data.toString()));
+        }
+
+        if (bInven && qName.equalsIgnoreCase("IDATA")) {
+            bItemData = false;
+        }
+
+        if (bItemData && qName.equalsIgnoreCase("NAME")) {
+            item.setName(data.toString());
+        }
+
+        if (bItemData && qName.equalsIgnoreCase("DISP")) {
+            item.setDesc(data.toString());
+            // is it description or display?
+        }
     }
 
     @Override
@@ -201,7 +219,16 @@ public class AreaHandler extends DefaultHandler {
         data.append(new String(ch, start, length));
     }
 
-    public String getExitName(Integer dir) {
+    private ItemType getItemType(String type) {
+        switch (type) {
+            case "GenArmor":
+                return ItemTypes.ARMOR;
+                // to be updated
+        }
+        return ItemTypes.NONE;
+    }
+
+    private String getExitName(Integer dir) {
         switch (dir) {
             case 0:
                 return "north";
