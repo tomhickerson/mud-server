@@ -56,7 +56,7 @@ public class Creature extends MUDObject implements Mobile {
 	
 	private Strategy strategy;
 	private String display;
-	List<Thing> inventory = new ArrayList<Thing>();
+	List<Item> inventory = new ArrayList<Item>();
 	
 	public Creature() {
 		this("creature", "some non-descript creature");
@@ -124,13 +124,13 @@ public class Creature extends MUDObject implements Mobile {
 		this.hp = maxhp;
 	}
 
-	public List<Thing> getInventory() { return inventory; }
+	public List<Item> getInventory() { return inventory; }
 
-	public void addItem(Thing item) {
+	public void addItem(Item item) {
 		inventory.add(item);
 	}
 
-	public void setInventory(ArrayList<Thing> items) {
+	public void setInventory(ArrayList<Item> items) {
 		this.inventory = items;
 	}
 	
