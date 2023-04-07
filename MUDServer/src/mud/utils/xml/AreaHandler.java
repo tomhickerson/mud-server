@@ -224,6 +224,18 @@ public class AreaHandler extends DefaultHandler {
             case "GenArmor":
                 return ItemTypes.ARMOR;
                 // to be updated
+            case "GenFood":
+                return ItemTypes.FOOD;
+            case "GenDrink":
+                return ItemTypes.DRINK;
+            case "GenPotion":
+                return ItemTypes.POTION;
+            case "GenContainer":
+                return ItemTypes.CONTAINER;
+            case "GenWand":
+                return ItemTypes.WAND;
+            case "GenWeapon":
+                return ItemTypes.WEAPON;
         }
         return ItemTypes.NONE;
     }
