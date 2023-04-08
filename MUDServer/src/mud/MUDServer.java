@@ -1287,6 +1287,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		 * features. In fact that bit just above doesn't need any changing.
 		 * Although I might need to explicity handle aliases better.
 		 */
+		// tnote: update this next
 		addCommand("@access",   new AccessCommand());   //
 		addCommand("attack",    new AttackCommand());   //
 		//addCommand("cast",      new CastCommand());     //
@@ -2300,31 +2301,23 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 				if ( cmdIs(cmd, "connect") ) {
 					cmd_connect(arg, client); // handles wizflag checking itself (since that's player dependent)
-				}
-				else if ( cmdIs(cmd, "console") ) {
+				} else if ( cmdIs(cmd, "console") ) {
 					cmd_console(arg, client);
-				}
-				else if ( cmdIs(cmd, "create") ) {
+				} else if ( cmdIs(cmd, "create") ) {
 					send("Sorry, only Wizards are allowed to login at this time.", client);
-				}
-				else if (cmd.equals("help")) {
+				} else if (cmd.equals("help")) {
 					send("Available Commands: connect, console, create, help, quit, who", client);
-				}
-				else if ( cmdIs(cmd, "quit") ) {
+				} else if ( cmdIs(cmd, "quit") ) {
 					disconnect(client); // just kill the client?
-				}
-				else {
+				} else {
 					send("Huh? That is not a known command.", client);
 					debug("Command> Unknown Command");
 				}
-			}
-			else if (mode == GameMode.MAINTENANCE) // Maintenance Mode (a.k.a. Mode 2)
-			{
+			} else if (mode == GameMode.MAINTENANCE) {
 				send("System is in Maintenance Mode.", client); // >configurable message<
 				send("No Logins allowed. Booting Client...", client);
 				disconnect(client); // just kill the client
-			}
-			else {
+			} else {
 				// ? (any other mode number -- may indicate some kind of failure)
 				send("System may be malfunctioning.", client);
 				send("No Logins allowed. Booting Client...", client);
@@ -11204,23 +11197,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		 * some sort of result block might be useful, but turning getNPC(...) into a complex
 		 * function is not ideal...
 		 */
-		
-		/*
-		NPC npc = null;
-		
-		// TODO better resolution? I don't want to 
-		if( arg.contains(" ") ) {
-			List<NPC> npcList = objectDB.getNPCsByLocation( player.getLocation() );
-			
-			if     ( npcList.isEmpty()   ) npc = null;
-			else if( npcList.size() == 1 ) npc = npcList.get(0);
-			else {
-				npc = null;
-				
-				send("Did you mean?", client);
-				send( MUDServer.getNames(npcList), client);
-			}
-		}*/
 
 		// player should be not null, but...
 		if (player != null && npc != null) {

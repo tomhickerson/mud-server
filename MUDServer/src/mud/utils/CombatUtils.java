@@ -14,16 +14,12 @@ public final class CombatUtils {
 			// TODO this really should return the character's ability to cause damage by themselves
 			if( critical ) damage = 2;
 			else           damage = 1;
-		}
-		else {
-
-			//final String damageRoll = wtype.getDamage();
+		} else {
 
 			if (critical) {
 				//damage = Utils.roll(damageRoll) * wtype.getCritical();
 				damage = weapon.getDamage() * weapon.getCritical();
-			}
-			else {
+			} else {
 				//damage = Utils.roll(damageRoll);
 				damage = weapon.getDamage();
 			}
@@ -52,8 +48,7 @@ public final class CombatUtils {
 		}
 		else if (roll == 20) { // Natural 20 (guaranteed hit)
 			return true;
-		}
-		else { // compare to AC of target?
+		} else { // compare to AC of target?
 			return (roll > 1);
 			//return roll > 5;
 		}
@@ -61,18 +56,6 @@ public final class CombatUtils {
 
 	public static Weapon getWeapon(final Player player) {
 		Weapon weapon = null;
-
-		/*if( weapon == null ) {
-			weapon = (Weapon) player.getSlots().get("weapon").getItem();
-		}
-
-		if( weapon == null ) {
-			weapon = (Weapon) player.getSlots().get("weapon1").getItem();
-		}
-
-		if( weapon == null ) {
-			weapon = (Weapon) player.getSlots().get("weapon2").getItem();
-		}*/
 
 		if( weapon == null ) {
 			// skim through slots and find first weapon
