@@ -18142,7 +18142,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 			
 			write('\r');
 			write('\n');
-			//write("\r\n");
 		}
 	}
 
@@ -18160,30 +18159,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 	public void send(final String data, final Client client) {
 		// we won't send anything if the client is stopped
 		if ( client.isRunning() ) {
-			// int lineLimit = 80;
-
-			/*
-			 * if ( loginCheck(client) ) { lineLimit =
-			 * getPlayer(client).getLineLimit(); }
-			 */
-
-			/*
-			 * // if the data to be sent exceeds the line limit if
-			 * (data.length() > lineLimit) { String newData = data.substring(0,
-			 * lineLimit - 1); // choose a chunk of data that does not exceed
-			 * the limit
-			 * 
-			 * if (telnet == 0) // no telnet { client.write(newData + "\r\n"); }
-			 * else if (telnet == 1 || telnet == 2) { // telnet and mud clients
-			 * for (int c = 0; c < data.length(); c++) {
-			 * client.write(newData.charAt(c)); } client.write("\r\n"); }
-			 * 
-			 * send(data.substring(lineLimit - 1, data.length()), client); //
-			 * recursively call the function with the remaining data
-			 * 
-			 * return; }
-			 */
-			
 			// check if socket is open, otherwise drop the connection
 			final Socket s = client.getSocket();
 
@@ -18206,8 +18181,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 
 				client.write("\r\n");
 			}
-		}
-		else {
+		} else {
 			// DEBUG or Error or ?
 			System.out.println("Error: Client is inactive (maybe disconnected), message not sent");
 			System.out.println(data);
@@ -18276,14 +18250,8 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 	}
 	
 	public void debug(final Exception exception) {
-		// TODO should this be shown regardless?
 		System.out.println("--- Stack Trace ---");
 		exception.printStackTrace();
-		
-		if( debug ) {
-			//logDebug("--- Stack Trace ---");
-			//logDebug( exception );
-		}
 	}
 	
 	/* Logging Methods */
