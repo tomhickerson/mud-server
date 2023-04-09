@@ -1482,8 +1482,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 	private void run() {
 		debug("Entering main program loop...");
 		debug("Running? " + this.running); // tell us whether the MUD server is running or not
-		//debug("Server? " + s.isRunning()); // tell us whether the underlying socket server is running
-		
+
 		do {
 			try {
 				Thread.sleep(100);
@@ -14830,10 +14829,6 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		}
 		else if (icmd.equals("types")) {
 			send("Not Implemented Yet.", client);
-		}
-		else {
-			// currently causes a loop effect, where the command gets funneled back into op_iedit regardless
-			// cmdQueue.add(new CMD(input, client, 0));
 		}
 	}
 

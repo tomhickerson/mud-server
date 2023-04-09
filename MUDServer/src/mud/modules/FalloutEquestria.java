@@ -557,12 +557,7 @@ public final class FalloutEquestria extends GameModule implements ExtraCommands 
 			term.exec();
 			
 			String line = term.read();
-			//String line;
-			
-			/*while((line = term.read()) != null) {
-				client.write( line );
-			}*/
-			
+
 			while(line != null) {
 				System.out.println("Line NOT NULL!");
 				
