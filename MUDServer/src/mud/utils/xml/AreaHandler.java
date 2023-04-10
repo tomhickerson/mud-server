@@ -160,6 +160,7 @@ public class AreaHandler extends DefaultHandler {
 
         if (qName.equalsIgnoreCase("RMOB")) {
             mobList.add(mob);
+            areaZone.addMob(mob);
         }
 
         if (qName.equalsIgnoreCase("MLEVL")) {

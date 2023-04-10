@@ -36,8 +36,8 @@ public class CreationService {
         final Creature cre = new Creature();
 
         cre.setFlags(EnumSet.noneOf(ObjectFlag.class));
-        cre.setLocation(Constants.VOID);
-
+        // cre.setLocation(Constants.VOID);
+        cre.setLocation(objectDB.getRoomByName(cre.getTextLocation()).getLocation());
         objectDB.addAsNew(cre);
         objectDB.addCreature(cre);
 

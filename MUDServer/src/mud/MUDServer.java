@@ -22455,6 +22455,17 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 						objectDB.addRoom(r);
 					}
 					temp.setId(objectDB.peekNextId());
+					System.out.println("Found " + temp.getMobs().size() + " mobiles in zone " + temp.getName());
+					for (Creature mob : temp.getMobs()) {
+						// mob.setDBRef(new Integer(objectDB.peekNextId()));
+						mob.setLocation(objectDB.getRoomByName(mob.getTextLocation()).getLocation());
+						objectDB.addAsNew(mob);
+						objectDB.addCreature(mob);
+						for (Item item : mob.getInventory()) {
+							objectDB.addAsNew(item);
+							objectDB.addItem(item);
+						}
+					}
 				} else {
 					temp = new Zone(name, parent);
 					temp.setId(id);
