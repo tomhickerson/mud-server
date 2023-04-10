@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import mud.objects.Creature;
 import mud.objects.Room;
 
 /**
@@ -27,6 +28,8 @@ public class Zone {
 	private Map<Integer, Room> roomsById = new TreeMap<Integer, Room>();
 	private Map<String, Room> roomsByName = new TreeMap<String, Room>();
 	private Map<String, Room> roomsByFlag = new TreeMap<String, Room>();
+
+	private List<Creature> mobs = new ArrayList<Creature>();
 
 	public Zone(final String name, final Zone parent) {
 		this.name = name;
@@ -75,6 +78,18 @@ public class Zone {
 		this.rooms.remove(room);
 		this.roomsById.put(room.getDBRef(), room);
 		this.roomsByName.remove(room.getName());
+	}
+
+	public void addMob(Creature mob) {
+		this.mobs.add(mob);
+	}
+
+	public void removeMob(Creature mob) {
+		this.mobs.remove(mob);
+	}
+
+	public List<Creature> getMobs() {
+		return mobs;
 	}
 	
 	public boolean hasRoom(final Room room) {
