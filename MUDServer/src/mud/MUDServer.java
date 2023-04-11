@@ -17238,7 +17238,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		if (motdFiles != null && motdFiles.length >= 1) {
 			int howMany = motdFiles.length;
 			int showMe = Utils.roll(1, howMany);
-			temp = Utils.loadBytes(resolvePath(WORLD_DIR, world, "motd", motdFiles[showMe - 1]));
+			temp = Utils.loadBytes(resolvePath(WORLD_DIR, world, "motd", motdFiles[showMe]));
 		} else {
 			temp = Utils.loadBytes(resolvePath(WORLD_DIR, world, "motd", motd_file));
 		}
@@ -20936,8 +20936,8 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 		// report the time
 		int hour = game_time.getHours();
 		int minute = game_time.getMinutes();
-
-		debug("Time loop: " + hour + ":" + minute);
+		// maybe not every minute
+		// debug("Time loop: " + hour + ":" + minute);
 
 		try {
 			handleMovement();
@@ -22881,8 +22881,7 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 					
 					conn_success = false;
 				}
-			}
-			else {
+			} else {
 				if (getPlayer(client) == null) {
 					// no such player
 					send("No such player.", client);
@@ -22897,9 +22896,9 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 				else               setClientState(client, "");             // clear state
 				
 				setLoginData(client, null); // clear login data
-			}
-			else {
+			} else {
 				// start over and try again
+				debug("Did we get here?");
 				ld.state = "NAME";
 				handle_interactive_login(client);
 			}
