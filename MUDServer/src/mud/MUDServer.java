@@ -22454,12 +22454,13 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 						objectDB.add(r);
 						objectDB.addRoom(r);
 						for (Creature cre : r.getMobiles()) {
-							cre.setLocation(r.getLocation());
-							// tnote: above not set yet?
+							cre.setLocation(r.getDBRef());
+							// tnote: above not set correctly yet?
 							objectDB.addAsNew(cre);
 							objectDB.addCreature(cre);
 							debug("Adding mob " + cre.getName());
 							for (Item item : cre.getInventory()) {
+								item.setLocation(r.getDBRef());
 								objectDB.addAsNew(item);
 								objectDB.addItem(item);
 							}

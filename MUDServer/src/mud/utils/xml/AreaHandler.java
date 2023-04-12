@@ -78,9 +78,9 @@ public class AreaHandler extends DefaultHandler {
         } else if (qName.equalsIgnoreCase("ROOMMOBS")) {
             // initiate list of monsters
             inMobs = true;
-            if (mobList == null) {
-                mobList = new ArrayList<>();
-            }
+
+            mobList = new ArrayList<>();
+
         } else if (qName.equalsIgnoreCase("RMOB")) {
             mob = new Creature();
         } else if (qName.equalsIgnoreCase("REXIT")) {
