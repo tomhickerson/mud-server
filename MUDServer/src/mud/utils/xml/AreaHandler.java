@@ -156,6 +156,7 @@ public class AreaHandler extends DefaultHandler {
         }
 
         if (qName.equalsIgnoreCase("ROOMMOBS")) {
+            area.setMobiles(mobList);
             inMobs = false;
         }
 
