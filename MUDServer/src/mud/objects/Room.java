@@ -258,6 +258,14 @@ public class Room extends MUDObject implements EventSource, Instance
 	public List<Exit> getExits() {
 		return Collections.unmodifiableList(exits);
 	}
+
+	public void setMobiles(List<Creature> mobiles) {
+		this.mobiles = mobiles;
+	}
+
+	public List<Creature> getMobiles() {
+		return this.mobiles;
+	}
 	
 	// TODO excise method
 	public String getExitNames() {
