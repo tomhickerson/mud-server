@@ -22459,10 +22459,12 @@ public final class MUDServer implements MUDServerI, MUDServerAPI {
 							objectDB.addAsNew(cre);
 							objectDB.addCreature(cre);
 							debug("Adding mob " + cre.getName());
+							// remove this next?
 							for (Item item : cre.getInventory()) {
 								item.setLocation(r.getDBRef());
 								objectDB.addAsNew(item);
 								objectDB.addItem(item);
+								debug("Adding item " + item.getName());
 							}
 						}
 					}

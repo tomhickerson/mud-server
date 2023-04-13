@@ -174,15 +174,15 @@ public class AreaHandler extends DefaultHandler {
             inMobText = false;
         }
 
-        if (inMobs && inMobText && qName.equalsIgnoreCase("NAME")) {
+        if (inMobs && inMobText &&  !bItemData && qName.equalsIgnoreCase("NAME")) {
             mob.setName(data.toString());
         }
 
-        if (inMobs && inMobText && qName.equalsIgnoreCase("DESC")) {
+        if (inMobs && inMobText && !bItemData && qName.equalsIgnoreCase("DESC")) {
             mob.setDesc(data.toString());
         }
 
-        if (inMobs && inMobText && qName.equalsIgnoreCase("DISP")) {
+        if (inMobs && inMobText && !bItemData && qName.equalsIgnoreCase("DISP")) {
             mob.setDisplay(data.toString());
         }
 
